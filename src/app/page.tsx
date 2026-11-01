@@ -1,9 +1,11 @@
-import Image from "next/image";
+import { HeroBanner } from "@/components/hero-banner"
+import { HowBookingWorks } from "@/components/how-booking-works"
 
 export default function Home() {
   return (
-    <div>
-      
-    </div>
-  );
+    <main className="flex-1">
+      <HeroBanner />
+      <HowBookingWorks />
+    </main>
+  )
 }
