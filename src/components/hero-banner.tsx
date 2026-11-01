@@ -154,14 +154,12 @@ export function HeroBanner() {
 
                     <div className="mt-8 flex flex-wrap items-center gap-4">
                       <Button
-                        render={<Link href="/studios" />}
                         className="h-12! gap-2! rounded-full! bg-lime-400! px-7! text-sm! font-semibold! text-black! hover:bg-lime-300!"
                       >
                         Explore Studios
                         <ArrowRight />
                       </Button>
                       <Button
-                        render={<Link href="/list-a-studio" />}
                         variant="outline"
                         className="h-12! rounded-full! border-white/40! bg-transparent! px-7! text-sm! font-semibold! text-white! hover:bg-white/10!"
                       >

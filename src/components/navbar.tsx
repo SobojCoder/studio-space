@@ -26,7 +26,7 @@ const navLinks = [
 export function Navbar() {
   return (
     <header className="sticky top-0 z-50 border-b border-zinc-800 bg-black text-white">
-      <div className="mx-auto flex h-16 w-full max-w-7xl items-center gap-8 px-6">
+      <div className="mx-auto flex h-16 w-full justify-between max-w-7xl items-center gap-8 px-6">
         <Link href="/" className="flex items-center gap-2.5">
           <span className="flex size-9 items-center justify-center rounded-full bg-lime-400">
             <Aperture className="size-5 text-black" strokeWidth={2.5} />
@@ -36,7 +36,7 @@ export function Navbar() {
           </span>
         </Link>
 
-        <nav className="flex items-center gap-6">
+        <nav className="flex items-center justify-center text-center gap-6">
           <DropdownMenu>
             <DropdownMenuTrigger className="inline-flex items-center gap-1 text-sm text-zinc-300 transition-colors hover:text-white">
               Explore
@@ -56,7 +56,6 @@ export function Navbar() {
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
-
           {navLinks.map((link) => (
             <Link
               key={link.href}
@@ -68,17 +67,19 @@ export function Navbar() {
           ))}
         </nav>
 
-        <div className="ml-auto flex items-center gap-3">
+        <div className=" flex items-center gap-3">
           <span aria-hidden className="h-6 w-px bg-zinc-700" />
-          <Button
-            variant="outline"
-            className="h-9 rounded-full border-zinc-700 bg-transparent px-4 text-white hover:bg-zinc-800 hover:text-white"
-          >
-            Sign In
-          </Button>
+          <Link
+          href="/sign-in"
+          className="rounded-full border border-[#C6F36B] px-5 py-2 text-[#C6F36B] hover:bg-[#C6F36B] hover:text-black"
+        >
+          Sign In
+        </Link>
+          <Link href='/sign-up'>
           <Button className="h-9 rounded-full bg-lime-400 px-5 text-black hover:bg-lime-300">
-            Get Started
+            Sign Up
           </Button>
+          </Link>
         </div>
       </div>
     </header>
