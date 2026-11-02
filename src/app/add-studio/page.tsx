@@ -14,6 +14,8 @@ import {
   User,
   ArrowRight,
   Camera,
+  Plus,
+  X,
 } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 
@@ -77,6 +79,18 @@ export default function AddStudioPage() {
         : [...prev, amenity]
     );
   };
+  const [imageUrls, setImageUrls] = useState<string[]>([""]);
+
+const handleImageChange = (index: number, value: string) => {
+  setImageUrls((prev) => prev.map((url, i) => (i === index ? value : url)));
+};
+
+const addImageField = () => setImageUrls((prev) => [...prev, ""]);
+
+const removeImageField = (index: number) =>
+  setImageUrls((prev) => prev.filter((_, i) => i !== index));
+
+const validImages = imageUrls.map((u) => u.trim()).filter(Boolean);
 
   const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -98,6 +112,7 @@ export default function AddStudioPage() {
       ownerEmail: session?.user.email,
       ownerName: session?.user.name,
     };
+    
 
     console.log(studioData);
   };
@@ -308,41 +323,95 @@ export default function AddStudioPage() {
               </div>
 
               {/* Location + Image URL */}
-              <div className="grid gap-6 md:grid-cols-2">
-                <div>
-                  <label htmlFor="location" className={labelClass}>
-                    <MapPin size={16} className="text-[#C6F36B]" />
-                    Location / Address
-                  </label>
-                  <input
-                    type="text"
-                    id="location"
-                    name="location"
-                    placeholder="e.g. 123 Creative Ave, Brooklyn, NY"
-                    value={formData.location}
-                    onChange={handleChange}
-                    required
-                    className={inputClass}
-                  />
-                </div>
+              {/* Location */}
+<div>
+  <label htmlFor="location" className={labelClass}>
+    <MapPin size={16} className="text-[#C6F36B]" />
+    Location / Address
+  </label>
+  <input
+    type="text"
+    id="location"
+    name="location"
+    placeholder="e.g. 123 Creative Ave, Brooklyn, NY"
+    value={formData.location}
+    onChange={handleChange}
+    required
+    className={inputClass}
+  />
+</div>
 
-                <div>
-                  <label htmlFor="imageUrl" className={labelClass}>
-                    <ImageIcon size={16} className="text-[#C6F36B]" />
-                    Image URL
-                  </label>
-                  <input
-                    type="url"
-                    id="imageUrl"
-                    name="imageUrl"
-                    placeholder="https://example.com/studio.jpg"
-                    value={formData.imageUrl}
-                    onChange={handleChange}
-                    required
-                    className={inputClass}
-                  />
-                </div>
-              </div>
+{/* Multiple Image URLs */}
+<div>
+  <label className={labelClass}>
+    <ImageIcon size={16} className="text-[#C6F36B]" />
+    Studio Images
+  </label>
+
+  <div className="space-y-3">
+    {imageUrls.map((url, index) => (
+      <div key={index} className="flex items-center gap-3">
+        <input
+          type="url"
+          name={`imageUrl-${index}`}
+          placeholder={
+            index === 0
+              ? "Cover image: https://example.com/studio.jpg"
+              : "https://example.com/studio-2.jpg"
+          }
+          value={url}
+          onChange={(e) => handleImageChange(index, e.target.value)}
+          required={index === 0}
+          className={inputClass}
+        />
+
+        {imageUrls.length > 1 && (
+          <button
+            type="button"
+            onClick={() => removeImageField(index)}
+            aria-label={`Remove image ${index + 1}`}
+            className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-[#0B0D10] text-[#9299A5] transition hover:border-red-400/50 hover:text-red-400"
+          >
+            <X size={18} />
+          </button>
+        )}
+      </div>
+    ))}
+  </div>
+
+  <button
+    type="button"
+    onClick={addImageField}
+    className="mt-3 inline-flex items-center gap-2 rounded-full border border-[#C6F36B]/30 bg-[#C6F36B]/10 px-4 py-2 text-sm text-[#C6F36B] transition hover:bg-[#C6F36B]/20"
+  >
+    <Plus size={16} />
+    Add another image
+  </button>
+</div>
+
+{/* Image Preview */}
+{validImages.length > 0 && (
+  <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
+    {validImages.map((src, index) => (
+      <div
+        key={`${src}-${index}`}
+        className="relative overflow-hidden rounded-xl border border-white/10"
+      >
+        <div
+          className="h-40 bg-cover bg-center"
+          style={{
+            backgroundImage: `linear-gradient(to top, rgba(11,13,16,.7), rgba(11,13,16,.05)), url('${src}')`,
+          }}
+        />
+        {index === 0 && (
+          <span className="absolute left-2 top-2 rounded-full bg-[#C6F36B] px-3 py-1 text-xs font-semibold text-[#0B0D10]">
+            Cover
+          </span>
+        )}
+      </div>
+    ))}
+  </div>
+)}
 
               {/* Image Preview */}
               {formData.imageUrl && (

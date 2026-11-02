@@ -1,9 +1,9 @@
+import { IStudio } from "@/Type/studio";
 import {
   ArrowUpRight,
   Clock,
   MapPin,
   Search,
-  SlidersHorizontal,
   Star,
   Users,
 } from "lucide-react";
@@ -90,7 +90,7 @@ const StudioList = async () => {
         {/* Studio Grid */}
         {studios.length > 0 ? (
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {studios.map((studio) => (
+            {studios.map((studio: IStudio) => (
               <div
                 key={studio._id}
                 className="group overflow-hidden rounded-2xl border border-white/10 bg-[#181A20] transition duration-300 hover:-translate-y-2 hover:border-[#C4F45A]/50 hover:shadow-xl hover:shadow-[#C4F45A]/5"
@@ -160,7 +160,7 @@ const StudioList = async () => {
                     </div>
 
                     <Link
-                      href={`/studios/${studio._id}`}
+                      href={`/studio-list/${studio._id}`}
                       className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#C4F45A] to-[#A8E83E] px-4 py-3 text-sm font-semibold text-[#111518] transition hover:opacity-90"
                     >
                       View Details
