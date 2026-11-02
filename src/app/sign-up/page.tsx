@@ -16,50 +16,53 @@ import {
   ArrowRight,
   Sparkles,
 } from "lucide-react";
+import { redirect } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 
 export default function SignUpPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
+
+// const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+//     e.preventDefault();
+
+//     const formData = new FormData(e.currentTarget);
+
+//     const fullName = String(formData.get("fullName") ?? "");
+//     const email = String(formData.get("email") ?? "");
+//     const password = String(formData.get("password") ?? "");
+//     const confirmPassword = String(formData.get("confirmPassword") ?? "");
+
+//     // Check whether passwords match
+//     if (password !== confirmPassword) {
+//       console.error("Passwords do not match");
+//       return;
+//     }
+
+//     const { data, error } = await signUp.email({
+//       name: fullName,
+//       email,
+//       password,
+//     });
+
+//     if (error) {
+//       console.error("Signup error:", error);
+//       return;
+//     }
+
+//     if (data) {
+//       redirect('/')
+//     }
+//   };
+
+
+const handleSignInWithGoogle = async()=>{
+  const data = await authClient.signIn.social({
+    provider: "google",
   });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
-  const handleSubmit = async(e: React.SubmitEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    // const userFormData = new FormData(e.target)
-    // const user = Object.fromEntries(userFormData.entries())
-    // const {data, error} = await authClient.signUp.email({
-    //     ...user
-    // })
-
-    // if(data){
-    //     console.log(data);
-    // }
-    // if(error){
-    //     console.log(error);
-    // }
-    
-    if (formData.password !== formData.confirmPassword) {
-        alert("Passwords do not match!");
-        return;
-    }
-
-    
-    console.log(formData);
-  };
+  console.log(data);
+}
 
   const benefits = [
     { icon: CalendarDays, title: "Easy Booking", description: "Book your favorite studio effortlessly." },
@@ -162,7 +165,7 @@ export default function SignUpPage() {
                 </p>
               </div>
 
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form className="space-y-4">
 
                 {/* Full Name */}
                 <div className="relative">
@@ -172,8 +175,6 @@ export default function SignUpPage() {
                     type="text"
                     name="name"
                     placeholder="Full Name"
-                    value={formData.name}
-                    onChange={handleChange}
                     required
                     className={inputClass}
                   />
@@ -187,8 +188,6 @@ export default function SignUpPage() {
                     type="email"
                     name="email"
                     placeholder="Email Address"
-                    value={formData.email}
-                    onChange={handleChange}
                     required
                     className={inputClass}
                   />
@@ -202,8 +201,6 @@ export default function SignUpPage() {
                     type={showPassword ? "text" : "password"}
                     name="password"
                     placeholder="Password"
-                    value={formData.password}
-                    onChange={handleChange}
                     required
                     minLength={8}
                     className={inputClass}
@@ -227,8 +224,6 @@ export default function SignUpPage() {
                     type={showConfirmPassword ? "text" : "password"}
                     name="confirmPassword"
                     placeholder="Confirm Password"
-                    value={formData.confirmPassword}
-                    onChange={handleChange}
                     required
                     minLength={8}
                     className={inputClass}
@@ -264,9 +259,7 @@ export default function SignUpPage() {
               {/* Google */}
               <button
                 type="button"
-                onClick={() => {
-                  // Connect Google authentication here
-                }}
+                onClick={handleSignInWithGoogle}
                 className="flex w-full items-center justify-center gap-3 rounded-xl border border-white/15 py-4 font-semibold transition hover:border-[#C6F36B] hover:bg-[#C6F36B]/5"
               >
                 <svg viewBox="0 0 48 48" className="h-5 w-5">
