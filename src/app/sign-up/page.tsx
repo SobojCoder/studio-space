@@ -16,6 +16,7 @@ import {
   ArrowRight,
   Sparkles,
 } from "lucide-react";
+import { authClient } from "@/lib/auth-client";
 
 export default function SignUpPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -35,14 +36,28 @@ export default function SignUpPage() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async(e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    // const userFormData = new FormData(e.target)
+    // const user = Object.fromEntries(userFormData.entries())
+    // const {data, error} = await authClient.signUp.email({
+    //     ...user
+    // })
+
+    // if(data){
+    //     console.log(data);
+    // }
+    // if(error){
+    //     console.log(error);
+    // }
+    
     if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match!");
-      return;
+        alert("Passwords do not match!");
+        return;
     }
 
+    
     console.log(formData);
   };
 

@@ -18,9 +18,10 @@ const exploreCategories = [
 ]
 
 const navLinks = [
-  { label: "List a Studio", href: "/list-a-studio" },
+  { label: "List a Studio", href: "/studio-list" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
+  { label: "Add-studio", href: "/add-studio" },
 ]
 
 export function Navbar() {
