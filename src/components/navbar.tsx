@@ -30,6 +30,7 @@ const exploreCategories = [
 ];
 
 const navLinks = [
+  { label: "Home", href: "/" },
   { label: "List a Studio", href: "/studio-list" },
   { label: "About-Us", href: "/about" },
   { label: "Contact", href: "/contact" },

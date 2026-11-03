@@ -459,7 +459,7 @@ const StudioDetailsClient = ({ studio }:{studio:IStudio}) => {
                   </div>
                 </div>
               </div>
-              <Link href='/booking-studio'>
+              <Link href={`/booking/${studio._id}`}>
               <button
                 type="button"
                 className="mt-7 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-lime-400 to-[#CCFF00] py-4 font-bold text-[#080E1B] shadow-lg shadow-lime-400/10 transition-all duration-300 hover:from-cyan-300 hover:to-lime-400 hover:shadow-lime-400/30"
