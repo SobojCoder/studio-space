@@ -7,14 +7,41 @@ import {
   Camera, Mail, Lock, Eye, EyeOff,
   CalendarDays, Zap, Heart, LogIn
 } from "lucide-react";
+import { authClient } from "@/lib/auth-client";
+import { redirect } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function SignInPage() {
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Sign In");
-  };
+   const handleSubmited =async(e:React.SubmitEvent<HTMLElement>)=>{
+      e.preventDefault()
+      const formData = new FormData(e.target);
+      const user = Object.fromEntries(formData.entries()) as {email: string, password: string}
+  
+      const {data, error} = await authClient.signIn.email({
+        ...user
+      })
+  
+     if(data){
+        toast.success("Login successfully")
+        redirect('/')
+        console.log(data);
+    }
+    if(error){
+        toast.error(error.message ?? "Sign in failed")
+        console.log(error);
+    }
+  
+    }
+
+  
+    const handleSignInGoogle = async()=>{
+      const data = await authClient.signIn.social({
+        provider: "google",
+        callbackURL: "/",
+      })
+    }
 
   return (
     <main className="min-h-screen bg-[#111518] text-white flex flex-col lg:flex-row">
@@ -95,7 +122,7 @@ export default function SignInPage() {
           </div>
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmited} className="space-y-5">
 
             {/* Email */}
             <div className="flex items-center gap-3 border border-white/10 rounded-xl px-5 py-4 focus-within:border-[#C4F45A] transition">
@@ -103,6 +130,7 @@ export default function SignInPage() {
 
               <input
                 type="email"
+                name="email"
                 placeholder="Email Address"
                 required
                 className="w-full bg-transparent outline-none text-white text-base placeholder:text-slate-400"
@@ -116,6 +144,7 @@ export default function SignInPage() {
 
               <input
                 type={showPassword ? "text" : "password"}
+                name="password"
                 placeholder="Password"
                 required
                 className="w-full bg-transparent outline-none text-white text-base placeholder:text-slate-400"
@@ -166,6 +195,7 @@ export default function SignInPage() {
 
           {/* Google */}
           <button
+          onClick={handleSignInGoogle}
             type="button"
             className="w-full py-3.5 rounded-xl border border-white/15 flex items-center justify-center gap-3 text-base hover:bg-white/5 transition"
           >

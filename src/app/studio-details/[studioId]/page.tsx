@@ -332,16 +332,7 @@ const StudioDetails = async ({
                   </div>
                 </div>
 
-                <a
-                  href={`mailto:${studio.ownerEmail}?subject=${encodeURIComponent(
-                    `Question about ${studio.title}`
-                  )}`}
-                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:border-lime-400/50 hover:bg-lime-400/10"
-                >
-                  <Mail size={16} />
-                  Contact Host
-                  <ArrowUpRight size={15} />
-                </a>
+               
               </div>
             </section>
 

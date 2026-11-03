@@ -6,6 +6,7 @@ import {
   ArrowUpRight,
   CalendarDays,
   CheckCircle2,
+  Link,
   Mail,
   MapPin,
   ShieldCheck,
@@ -112,12 +113,14 @@ export function BookWorkspaceModal({ studio, className }: BookingModalProps) {
           className
         )}
       >
+        <Link href={`/booking-studio/${studio._id}`}>
         <CalendarDays size={20} />
         Book Workspace Now
         <ArrowUpRight
           size={18}
           className="transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
         />
+        </Link>
       </DialogTrigger>
 
       <DialogContent

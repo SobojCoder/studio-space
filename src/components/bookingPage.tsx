@@ -16,21 +16,14 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 
-export default function BookingPage() {
+export default  function BookingPage(studio) {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("10:00");
   const [duration, setDuration] = useState(2);
   const [guests, setGuests] = useState(2);
 
   // Demo studio information
-  const studio = {
-    name: "Creative Photography Studio",
-    location: "Dhanmondi, Dhaka",
-    image:
-      "https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=1000",
-    price: 1500,
-    rating: 4.9,
-  };
+ 
 
   const totalPrice = studio.price * duration;
   const serviceFee = Math.round(totalPrice * 0.05);
@@ -286,6 +279,8 @@ export default function BookingPage() {
                 <Image
                   src={studio.image}
                   alt={studio.name}
+                  width={200}
+                  height={200}
                   className="h-full w-full object-cover"
                 />
 

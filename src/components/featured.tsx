@@ -1,11 +1,11 @@
+
 import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
 import { ArrowRight, MapPin, Star } from "lucide-react";
-import { cn } from "cn";
+import { cn } from "@/lib/utils";
 import { IStudio } from "@/Type/studio";
 import { FavoriteButton } from "@/components/favorite-button";
-import { notFound } from "next/navigation";
 
 import MarqueeText from "react-marquee-text";
 import "react-marquee-text/dist/styles.css";
@@ -15,12 +15,7 @@ const FEATURED_COUNT = 6;
 const GRID_CLASSES =
   "mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6";
 
-
-/** Shown when the studio API is unreachable so the section always renders. */
-
-
-
-
+// Studio Card
 const StudioCard = ({
   studio,
   index,
@@ -29,7 +24,7 @@ const StudioCard = ({
   index: number;
 }) => {
   return (
-    <article className="group w-[280px]  mr-3 sm:w-[340px] md:w-[380px] flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#111518] transition duration-300 hover:-translate-y-1 hover:border-lime-400/40">
+    <article className="group mr-3 flex h-full w-[280px] flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#111518] transition duration-300 hover:-translate-y-1 hover:border-lime-400/40 sm:w-[340px] md:w-[380px]">
       <div className="relative h-40 overflow-hidden xl:h-36">
         <Image
           src={studio.imageUrl}
@@ -44,7 +39,7 @@ const StudioCard = ({
             "absolute left-3 top-3 z-10 max-w-[calc(100%-4.5rem)] truncate rounded-full px-3 py-1.5 text-xs font-semibold",
             index % 2 === 0
               ? "bg-violet-600 text-white"
-              : "bg-lime-400 text-black",
+              : "bg-lime-400 text-black"
           )}
         >
           {studio.category}
@@ -62,7 +57,9 @@ const StudioCard = ({
           <span className="font-semibold text-white">
             {studio.rating.toFixed(1)}
           </span>
-          <span className="text-zinc-400">({studio.totalReviews})</span>
+          <span className="text-zinc-400">
+            ({studio.totalReviews})
+          </span>
         </div>
 
         <h3 className="mt-2 text-[15px] font-semibold leading-snug text-white">
@@ -95,30 +92,7 @@ const StudioCard = ({
   );
 };
 
-async function FeaturedGrid() {  
-  const res = await fetch("http://localhost:5000/feature-studio");
-
-  if (!res.ok) return notFound();
-
-  const studios = (await res.json()) as IStudio[];
-  console.log(studios.length);
-  return (
-    <div>
-      <MarqueeText
-        duration={15}
-        direction="right"
-        pauseOnHover
-        className="mt-12"
-      >
-
-      {studios.map((studio, index) => (
-        <StudioCard key={studio._id} studio={studio} index={index} />
-      ))}
-      </MarqueeText>
-    </div>
-  );
-}
-
+// Loading Skeleton
 const FeaturedGridSkeleton = () => {
   return (
     <div className={GRID_CLASSES} aria-hidden>
@@ -132,12 +106,46 @@ const FeaturedGridSkeleton = () => {
   );
 };
 
-const Featured = async() => {
-    const res = await fetch("http://localhost:5000/feature-studio");
+// Fetch Featured Studios
+async function FeaturedGrid() {
+  const res = await fetch("http://localhost:5000/feature-studio", {
+    cache: "no-store",
+  });
 
-  if (!res.ok) return notFound();
+  if (!res.ok) {
+    throw new Error("Failed to fetch featured studios");
+  }
 
-  const studios = (await res.json()) as IStudio[];
+  const text = await res.text();
+
+  if (!text) {
+    throw new Error("API returned an empty response");
+  }
+
+  const studios = JSON.parse(text) as IStudio[];
+
+  return (
+    <div>
+      <MarqueeText
+        duration={15}
+        direction="right"
+        pauseOnHover
+        className="mt-12"
+      >
+        {studios.map((studio, index) => (
+          <StudioCard
+            key={studio._id}
+            studio={studio}
+            index={index}
+          />
+        ))}
+      </MarqueeText>
+    </div>
+  );
+}
+
+// Main Featured Component
+const Featured = () => {
   return (
     <section className="w-full bg-black py-16 text-white md:py-20">
       <div className="mx-auto w-full max-w-7xl px-6 md:px-8">
@@ -151,6 +159,7 @@ const Featured = async() => {
             <h2 className="text-4xl font-bold tracking-tight sm:text-5xl">
               Featured <span className="text-lime-400">Studios</span>
             </h2>
+
             <p className="mt-3 text-base text-zinc-400 md:text-lg">
               Top-rated spaces, handpicked for creators like you.
             </p>

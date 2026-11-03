@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Dancing_Script, Geist, Geist_Mono } from "next/font/google";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
+
+import { Toaster } from "react-hot-toast";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -42,6 +44,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
         <Navbar />
         {children}
         <Footer year={copyrightYear} />
+        <Toaster position="top-center" />
       </body>
     </html>
   );

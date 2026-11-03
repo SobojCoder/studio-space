@@ -16,53 +16,46 @@ import {
   ArrowRight,
   Sparkles,
 } from "lucide-react";
-import { redirect } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
+import { redirect } from "next/navigation";
+import toast from "react-hot-toast";
 
 export default function SignUpPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
 
-// const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-//     e.preventDefault();
+  const handleSubmited =async(e:React.SubmitEvent<HTMLElement>)=>{
+    e.preventDefault()
+    const formData = new FormData(e.target);
+    const user = Object.fromEntries(formData.entries()) as {name:string, email: string, password: string, confirmPassword: string}
 
-//     const formData = new FormData(e.currentTarget);
+    const {data, error} = await authClient.signUp.email({
+      ...user
+    })
 
-//     const fullName = String(formData.get("fullName") ?? "");
-//     const email = String(formData.get("email") ?? "");
-//     const password = String(formData.get("password") ?? "");
-//     const confirmPassword = String(formData.get("confirmPassword") ?? "");
+    if (error) {
+        toast.error(error.message || "Account could not be created.");
+      }
 
-//     // Check whether passwords match
-//     if (password !== confirmPassword) {
-//       console.error("Passwords do not match");
-//       return;
-//     }
+      // ৩. সফল হলে লগইন পেজে নেওয়া
+      if (data) {
+        toast.success("Account created! Now sign in.");
+        redirect("/sign-in");
+      }
 
-//     const { data, error } = await signUp.email({
-//       name: fullName,
-//       email,
-//       password,
-//     });
+    console.log(user);
+  }
 
-//     if (error) {
-//       console.error("Signup error:", error);
-//       return;
-//     }
-
-//     if (data) {
-//       redirect('/')
-//     }
-//   };
+  const handleSignInGoogle = async()=>{
+    const data = await authClient.signIn.social({
+      provider: "google",
+      callbackURL: "/",
+    })
+  }
 
 
-const handleSignInWithGoogle = async()=>{
-  const data = await authClient.signIn.social({
-    provider: "google",
-  });
-  console.log(data);
-}
+
 
   const benefits = [
     { icon: CalendarDays, title: "Easy Booking", description: "Book your favorite studio effortlessly." },
@@ -165,7 +158,7 @@ const handleSignInWithGoogle = async()=>{
                 </p>
               </div>
 
-              <form className="space-y-4">
+              <form onSubmit={handleSubmited} className="space-y-4">
 
                 {/* Full Name */}
                 <div className="relative">
@@ -258,9 +251,9 @@ const handleSignInWithGoogle = async()=>{
 
               {/* Google */}
               <button
+              onClick={handleSignInGoogle}
                 type="button"
-                onClick={handleSignInWithGoogle}
-                className="flex w-full items-center justify-center gap-3 rounded-xl border border-white/15 py-4 font-semibold transition hover:border-[#C6F36B] hover:bg-[#C6F36B]/5"
+                className="cursor-pointer flex w-full items-center justify-center gap-3 rounded-xl border border-white/15 py-4 font-semibold transition hover:border-[#C6F36B] hover:bg-[#C6F36B]/5"
               >
                 <svg viewBox="0 0 48 48" className="h-5 w-5">
                   <path fill="#FFC107" d="M43.6 24.5c0-1.5-.1-3-.4-4.4H24v8.3h11c-.5 2.7-2 5-4.4 6.5l7 5.4c4-3.7 6-9.1 6-15.8Z" />

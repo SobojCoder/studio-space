@@ -39,7 +39,7 @@ const StudioList = async () => {
 
         {/* Search */}
         {/* <div className="mb-8 flex flex-col gap-4 rounded-2xl border border-white/10 bg-[#181A20] p-4 sm:flex-row">
-
+  
       <div className="relative flex-1">
         <Search
           className="absolute left-4 top-1/2 -translate-y-1/2 text-[#94A3B8]"
@@ -152,7 +152,7 @@ const StudioList = async () => {
                       <p className="text-xs text-[#94A3B8]">Starting from</p>
 
                       <p className="text-xl font-bold text-white">
-                        ৳{studio.hourlyRate}
+                        ${studio.hourlyRate}
                         <span className="text-xs font-normal text-[#94A3B8]">
                           /hr
                         </span>
