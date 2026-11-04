@@ -75,10 +75,10 @@ export function BookingForm({ studio }: BookingFormProps) {
     e.preventDefault();
     const bookingData = {
       title: studio.title,
+      studioId: studio._id,
       image: studio.imageUrl,
       userName: user?.name,
       userEmail: user?.email,
-      
 
       // Date & Time
       bookingDate: date,
