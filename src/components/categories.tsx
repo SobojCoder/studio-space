@@ -1,12 +1,6 @@
 import Link from "next/link";
 import {
   ArrowRight,
-  Camera,
-  Clapperboard,
-  Drama,
-  Guitar,
-  Mic,
-  Music,
 } from "lucide-react";
 import { IStudio } from "@/Type/studio";
 import Image from "next/image";
