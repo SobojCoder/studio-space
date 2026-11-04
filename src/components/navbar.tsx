@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Aperture, Building2, CalendarDays, ChevronDown, LogOut, PlusCircle, Settings, UserRound } from "lucide-react";
@@ -9,40 +9,44 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import Image from "next/image";
 import { authClient } from "@/lib/auth-client";
 import {
   Popover,
   PopoverContent,
-  PopoverDescription,
-  PopoverHeader,
-  PopoverTitle,
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Separator } from "@base-ui/react";
+import toast from "react-hot-toast";
 
 const exploreCategories = [
-  "Photography Studios",
-  "Recording Studios",
-  "Film & TV Sets",
-  "Event Spaces",
-  "Rehearsal Rooms",
+  "Photography Studio",
+  "Meeting Studio",
+  "Podcast Studio",
+  "Music Studio",
+  "Creative Studio",
+  "Workshop Studio",
+  "Video Production Studio",
+  "Dance Studio",
+  "Content Creation Studio",
+  "Event Studio",
 ];
 
 const navLinks = [
   { label: "Home", href: "/" },
+  { label: "Add-studio", href: "/add-studio" },
   { label: "List a Studio", href: "/studio-list" },
   { label: "About-Us", href: "/about" },
   { label: "Contact", href: "/contact" },
-  { label: "Add-studio", href: "/add-studio" },
 ];
 
-export function Navbar() {
+export  function Navbar() {
   const { data: session } = authClient.useSession();
   const user = session?.user;
 
   const handleSignOut =()=>{
     authClient.signOut()
+
+    toast.error('You are sign out!')
   }
   return (
     <header className="sticky top-0 z-50 border-b border-zinc-800 bg-black text-white">
@@ -74,7 +78,7 @@ export function Navbar() {
             </DropdownMenuTrigger>
             <DropdownMenuContent
               align="start"
-              className="border border-zinc-800 bg-zinc-900 text-zinc-100"
+              className="border border-zinc-800 bg-zinc-900 text-zinc-100 w-full"
             >
               {exploreCategories.map((category) => (
                 <DropdownMenuItem
@@ -174,7 +178,7 @@ export function Navbar() {
            Add New Studio
           </Link>
           <Link
-            href="/studio-list"
+            href="/my-listing"
             className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-slate-300 transition hover:bg-[#C4F45A]/10 hover:text-[#C4F45A]"
           >
             <Building2 size={20} />

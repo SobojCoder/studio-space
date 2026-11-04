@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface StudioListClientProps {
   studios: IStudio[];
@@ -39,9 +39,10 @@ const StudioListClient = ({
   initialCategory,
 }: StudioListClientProps) => {
   const [search, setSearch] = useState("");
-  const category = initialCategory || "All Categories";
   const router = useRouter();
+  const searchParams = useSearchParams();
 
+  const category = searchParams.get("category") || "All Categories";
   // Search and Category Filter
   const filteredStudios = studios.filter((studio) => {
     const searchMatch =
@@ -95,7 +96,7 @@ const StudioListClient = ({
           </div>
 
           {/* Category Filter */}
-          <div className="flex items-center gap-2 rounded-xl border border-white/10 bg-[#111518] px-4">
+          <div className="flex  items-center gap-2 rounded-xl border border-white/10 bg-[#111518] px-8">
             <SlidersHorizontal size={18} className="text-[#C4F45A]" />
 
             <select
@@ -111,11 +112,11 @@ const StudioListClient = ({
                   );
                 }
               }}
-              className="w-full bg-transparent py-3 text-sm text-[#94A3B8] outline-none"
+              className="px-4 bg-[#111518] w-full py-3 text-sm text-[#94A3B8] outline-none"
             >
-              {categories.map((item) => (
-                <option key={item} value={item}>
-                  {item}
+              {studios.map((studio) => (
+                <option key={studio._id} value={studio.category}>
+                  {studio.category}
                 </option>
               ))}
             </select>

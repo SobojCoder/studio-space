@@ -1,3 +1,4 @@
+import MyStudioListingCard from '@/components/myStudioListtingCard';
 import { auth } from '@/lib/auth';
 import { IListing } from '@/Type/listing';
 import { ArrowUpRight, Camera, MapPin, Pencil, Plus, ShieldCheck, Trash2, Users } from 'lucide-react';
@@ -90,110 +91,7 @@ const session = await auth.api.getSession({
         <div className="space-y-5">
           {listing.length > 0 ? (
             listing.map((studio) => (
-              <div
-                key={studio._id}
-                className="group grid overflow-hidden rounded-2xl border border-white/10 bg-[#13171D] transition hover:border-[#C6F36B]/40 md:grid-cols-[260px_1fr]"
-              >
-                {/* Image */}
-                <div className="relative h-56 overflow-hidden md:h-full md:min-h-[230px]">
-                  {studio.imageUrl ? (
-  <Image
-    src={studio.imageUrl}
-    alt={studio.title}
-    fill
-    className="object-cover"
-  />
-) : (
-  <div className="flex h-full w-full items-center justify-center bg-[#252A32] text-[#94A3B8]">
-    No Image Available
-  </div>
-)}
-
-                  <span className="absolute left-4 top-4 rounded-full border border-white/10 bg-black/60 px-3 py-1.5 text-xs text-[#C6F36B] backdrop-blur-md">
-                    {studio.category}
-                  </span>
-                </div>
-
-                {/* Details */}
-                <div className="flex flex-col justify-between p-5 md:p-7">
-                  <div>
-                    <h3 className="text-xl font-bold transition group-hover:text-[#C6F36B]">
-                      {studio.title}
-                    </h3>
-
-                    <div className="mt-2 flex items-center gap-2 text-sm text-[#9299A5]">
-                      <MapPin size={15} className="text-[#C6F36B]" />
-                      {studio.location}
-                    </div>
-
-                    <p className="mt-4 line-clamp-2 text-sm leading-6 text-[#9299A5]">
-                      {studio.overview}
-                    </p>
-
-                    {/* Amenities */}
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      {studio.amenities.slice(0, 4).map((amenity) => (
-                        <span
-                          key={amenity}
-                          className="rounded-md border border-white/10 bg-[#1B2028] px-3 py-1.5 text-xs text-[#B0B5BF]"
-                        >
-                          {amenity}
-                        </span>
-                      ))}
-                    </div>
-
-                    {/* Capacity */}
-                    <div className="mt-5 flex flex-wrap gap-5 text-sm text-[#B0B5BF]">
-                      <span className="flex items-center gap-2">
-                        <Users size={16} className="text-[#C6F36B]" />
-                        Up to {studio.maxCapacity} Guests
-                      </span>
-
-                      <span className="flex items-center gap-2">
-                        <ShieldCheck size={16} className="text-[#C6F36B]" />
-                        Deposit: ৳{studio.securityDeposit}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Bottom */}
-                  <div className="mt-7 flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-5">
-                    <div>
-                      <span className="text-2xl font-bold text-[#C6F36B]">
-                        ৳{studio.hourlyRate}
-                      </span>
-                      <span className="ml-1 text-xs text-[#9299A5]">
-                        / hour
-                      </span>
-                    </div>
-
-                    <div className="flex items-center gap-2">
-                      <Link
-                        href={`/edit-studio/${studio._id}`}
-                        className="flex items-center gap-2 rounded-lg border border-white/10 px-4 py-2.5 text-sm transition hover:border-[#C6F36B] hover:text-[#C6F36B]"
-                      >
-                        <Pencil size={15} />
-                        Edit
-                      </Link>
-
-                      <button
-                        type="button"
-                        className="flex items-center gap-2 rounded-lg border border-red-500/20 px-4 py-2.5 text-sm text-red-400 transition hover:bg-red-500/10"
-                      >
-                        <Trash2 size={15} />
-                        Delete
-                      </button>
-
-                      <Link
-                        href={`/studio-list/${studio._id}`}
-                        className="rounded-lg bg-[#C6F36B] p-2.5 text-black transition hover:bg-[#d7ff88]"
-                      >
-                        <ArrowUpRight size={18} />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <MyStudioListingCard key={studio._id} studio={studio} />
             ))
           ) : (
             <div className="rounded-2xl border border-dashed border-white/15 bg-[#13171D] px-5 py-20 text-center">
