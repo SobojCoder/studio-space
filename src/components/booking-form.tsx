@@ -29,7 +29,7 @@ type BookingFormProps = {
 
 export function BookingForm({ studio }: BookingFormProps) {
   const [date, setDate] = useState("");
-  const [time, setTime] = useState("10:00");
+  const [time, setTime] = useState("09:00 AM");
   const [duration, setDuration] = useState(2);
   const [guests, setGuests] = useState(2);
   const [fullName, setFullName] = useState("");
@@ -73,14 +73,58 @@ export function BookingForm({ studio }: BookingFormProps) {
     e: React.FormEvent<HTMLFormElement>
   ) => {
     e.preventDefault();
-   
+    const bookingData = {
+      title: studio.title,
+      image: studio.imageUrl,
+      userName: user?.name,
+      userEmail: user?.email,
+      
+
+      // Date & Time
+      bookingDate: date,
+      startingTime: time,
+
+      // Booking Details
+      duration: duration,
+      guests: selectedGuests,
+
+      // Personal Information
+      personalInfo: {
+        fullName: fullName,
+        email: email,
+        phone: phone,
+      },
+
+      notes: notes,
+
+      // Price Details
+      pricing: {
+        hourlyRate: hourlyRate,
+        rentalTotal: rentalTotal,
+        serviceFee: serviceFee,
+        securityDeposit: securityDeposit,
+        grandTotal: grandTotal,
+      },
+    }
+    
+
+   const res = await fetch("http://localhost:5000/bookings", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify(bookingData),
+});
+    const data = await res.json();
+
+    console.log(data);
 
   };
 
   // Reset form
   const resetForm = () => {
     setDate("");
-    setTime("10:00");
+    setTime("09:00 AM");
     setDuration(2);
     setGuests(Math.min(2, maxCapacity));
     setFullName("");
@@ -254,13 +298,13 @@ export function BookingForm({ studio }: BookingFormProps) {
                         onChange={(e) => setTime(e.target.value)}
                         className="w-full rounded-xl border border-white/10 bg-[#0B0D10] p-4 text-sm outline-none focus:border-[#C6F36B]"
                       >
-                        <option value="09:00">09:00 AM</option>
-                        <option value="10:00">10:00 AM</option>
-                        <option value="11:00">11:00 AM</option>
-                        <option value="12:00">12:00 PM</option>
-                        <option value="14:00">02:00 PM</option>
-                        <option value="16:00">04:00 PM</option>
-                        <option value="18:00">06:00 PM</option>
+                        <option value="09:00 AM">09:00 AM</option>
+                        <option value="10:00 AM">10:00 AM</option>
+                        <option value="11:00 AM">11:00 AM</option>
+                        <option value="12:00 PM">12:00 PM</option>
+                        <option value="02:00 PM">02:00 PM</option>
+                        <option value="04:00 PM">04:00 PM</option>
+                        <option value="06:00 PM">06:00 PM</option>
                       </select>
                     </div>
 
