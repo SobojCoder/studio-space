@@ -4,6 +4,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+
 import {
   ArrowLeft,
   ArrowRight,
@@ -18,8 +19,8 @@ import {
 } from "lucide-react";
 import type { IStudio } from "@/Type/studio";
 import { authClient } from "@/lib/auth-client";
+import { redirect } from "next/navigation";
 
-const BOOKING_ENDPOINT = "http://localhost:5000/booking";
 
 type BookingStatus = "idle" | "submitting" | "success" | "error";
 
@@ -73,6 +74,9 @@ export function BookingForm({ studio }: BookingFormProps) {
     e: React.FormEvent<HTMLFormElement>
   ) => {
     e.preventDefault();
+    setStatus("submitting");
+  setError("");
+
     const bookingData = {
       title: studio.title,
       studioId: studio._id,
@@ -117,7 +121,7 @@ export function BookingForm({ studio }: BookingFormProps) {
 });
     const data = await res.json();
 
-    console.log(data);
+    redirect('/my-bookings')
 
   };
 
@@ -422,7 +426,7 @@ export function BookingForm({ studio }: BookingFormProps) {
                       />
                     </div>
 
-                    <div className="grid gap-5 sm:grid-cols-2">
+                    <div className=" sm:grid-cols-2">
 
                       <div>
                         <label className="mb-2 block text-sm font-semibold">
@@ -436,25 +440,11 @@ export function BookingForm({ studio }: BookingFormProps) {
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
                           placeholder="you@example.com"
-                          className="w-full rounded-xl border border-white/10 bg-[#0B0D10] p-4 text-sm outline-none placeholder:text-[#9299A5] focus:border-[#C6F36B]"
-                        />
+                         className="w-full rounded-xl border border-white/10 bg-[#0B0D10] p-4 text-sm outline-none placeholder:text-[#9299A5] focus:border-[#C6F36B]"
+                      />
                       </div>
 
-                      <div>
-                        <label className="mb-2 block text-sm font-semibold">
-                          Phone Number
-                        </label>
-
-                        <input
-                          type="tel"
-                          required
-                          name="phone"
-                          value={phone}
-                          onChange={(e) => setPhone(e.target.value)}
-                          placeholder="+880 1XXXXXXXXX"
-                          className="w-full rounded-xl border border-white/10 bg-[#0B0D10] p-4 text-sm outline-none placeholder:text-[#9299A5] focus:border-[#C6F36B]"
-                        />
-                      </div>
+                      
 
                     </div>
 
@@ -550,7 +540,7 @@ export function BookingForm({ studio }: BookingFormProps) {
                       Hourly Rate
                     </p>
                     <p className="mt-1 text-lg font-bold text-[#C6F36B]">
-                      ৳{hourlyRate.toLocaleString()}
+                      ${hourlyRate.toLocaleString()}
                       <span className="text-xs font-normal text-[#9299A5]">
                         /hour
                       </span>
@@ -624,7 +614,7 @@ export function BookingForm({ studio }: BookingFormProps) {
                     <span className="text-[#9299A5]">
                       Service Fee (5%)
                     </span>
-                    <span>৳{serviceFee.toLocaleString()}</span>
+                    <span>${serviceFee.toLocaleString()}</span>
                   </div>
 
                   <div className="flex justify-between gap-2">
@@ -642,7 +632,7 @@ export function BookingForm({ studio }: BookingFormProps) {
                       </span>
 
                       <span className="text-2xl font-extrabold text-[#C6F36B]">
-                        ৳{grandTotal.toLocaleString()}
+                        ${grandTotal.toLocaleString()}
                       </span>
                     </div>
 

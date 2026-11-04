@@ -21,12 +21,38 @@ import { redirect } from "next/navigation";
 import toast from "react-hot-toast";
 
 export default function SignUpPage() {
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+const [password, setPassword] = useState("");
+const [confirmPassword, setConfirmPassword] = useState("");
+
+const [showPassword, setShowPassword] = useState(false);
+const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+const hasUppercase = /[A-Z]/.test(password);
+const hasLowercase = /[a-z]/.test(password);
+const hasMinLength = password.length >= 6;
+
+const isPasswordValid =
+  hasUppercase && hasLowercase && hasMinLength;
+
+const isPasswordMatch = password === confirmPassword;
 
 
   const handleSubmited =async(e:React.SubmitEvent<HTMLElement>)=>{
     e.preventDefault()
+
+
+    if (!isPasswordValid) {
+    toast.error("Please enter a valid password");
+    return;
+  }
+
+  if (!isPasswordMatch) {
+    toast.error("Passwords do not match");
+    return;
+  }
+
+
+
     const formData = new FormData(e.target);
     const user = Object.fromEntries(formData.entries()) as {name:string, email: string, password: string, confirmPassword: string}
 
@@ -187,50 +213,92 @@ export default function SignUpPage() {
                 </div>
 
                 {/* Password */}
-                <div className="relative">
-                  <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-[#C6F36B]" size={21} />
+                {/* Password */}
+<div className="relative">
+  <Lock
+    className="absolute left-4 top-1/2 -translate-y-1/2 text-[#C6F36B]"
+    size={21}
+  />
 
-                  <input
-                    type={showPassword ? "text" : "password"}
-                    name="password"
-                    placeholder="Password"
-                    required
-                    minLength={8}
-                    className={inputClass}
-                  />
+  <input
+    type={showPassword ? "text" : "password"}
+    name="password"
+    placeholder="Password"
+    value={password}
+    onChange={(e) => setPassword(e.target.value)}
+    required
+    className={inputClass}
+  />
+  
 
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-[#9299A5] hover:text-[#C6F36B]"
-                    aria-label="Toggle password visibility"
-                  >
-                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                  </button>
-                </div>
+  <button
+    type="button"
+    onClick={() => setShowPassword(!showPassword)}
+    className="absolute right-4 top-1/2 -translate-y-1/2 text-[#9299A5] hover:text-[#C6F36B]"
+  >
+    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+  </button>
+  
+</div>
+<div className="space-y-2 rounded-lg bg-white/5 p-4">
+  <p className="mb-2 text-sm font-medium text-gray-300">
+    Password must contain:
+  </p>
+
+  <p className={`flex items-center gap-2 text-sm ${
+    hasUppercase ? "text-[#C6F36B]" : "text-gray-500"
+  }`}>
+    {hasUppercase ? "✓" : "○"}
+    At least one uppercase letter (A-Z)
+  </p>
+
+  <p className={`flex items-center gap-2 text-sm ${
+    hasLowercase ? "text-[#C6F36B]" : "text-gray-500"
+  }`}>
+    {hasLowercase ? "✓" : "○"}
+    At least one lowercase letter (a-z)
+  </p>
+
+  <p className={`flex items-center gap-2 text-sm ${
+    hasMinLength ? "text-[#C6F36B]" : "text-gray-500"
+  }`}>
+    {hasMinLength ? "✓" : "○"}
+    Minimum 6 characters
+  </p>
+</div>
 
                 {/* Confirm Password */}
-                <div className="relative">
-                  <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-[#C6F36B]" size={21} />
+                {/* Confirm Password */}
+<div className="relative">
+  <Lock
+    className="absolute left-4 top-1/2 -translate-y-1/2 text-[#C6F36B]"
+    size={21}
+  />
 
-                  <input
-                    type={showConfirmPassword ? "text" : "password"}
-                    name="confirmPassword"
-                    placeholder="Confirm Password"
-                    required
-                    minLength={8}
-                    className={inputClass}
-                  />
+  <input
+    type={showConfirmPassword ? "text" : "password"}
+    name="confirmPassword"
+    placeholder="Confirm Password"
+    value={confirmPassword}
+    onChange={(e) => setConfirmPassword(e.target.value)}
+    required
+    className={inputClass}
+  />
 
-                  <button
-                    type="button"
-                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-[#9299A5] hover:text-[#C6F36B]"
-                    aria-label="Toggle confirm password visibility"
-                  >
-                    {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                  </button>
-                </div>
+  <button
+    type="button"
+    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+    className="absolute right-4 top-1/2 -translate-y-1/2 text-[#9299A5] hover:text-[#C6F36B]"
+  >
+    {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+  </button>
+</div>
+
+{confirmPassword && !isPasswordMatch && (
+  <p className="text-sm text-red-400">
+    Passwords do not match!
+  </p>
+)}
 
                 {/* Submit */}
                 <button

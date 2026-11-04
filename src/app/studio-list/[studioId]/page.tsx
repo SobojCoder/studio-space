@@ -10,10 +10,7 @@ const StudioDetailPage = async ({
   const { studioId } = await params;
 
   const res = await fetch(
-    `http://localhost:5000/studio/${studioId}`,
-    {
-      cache: "no-store",
-    }
+    `http://localhost:5000/studio/${studioId}`
   );
 
   if (!res.ok) {

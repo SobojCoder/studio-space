@@ -18,6 +18,9 @@ import {
   X,
 } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
+import Link from "next/link";
+import { redirect } from "next/navigation";
+import toast from "react-hot-toast";
 
 const categories = [
   "Photo Studio",
@@ -92,29 +95,41 @@ const removeImageField = (index: number) =>
 
 const validImages = imageUrls.map((u) => u.trim()).filter(Boolean);
 
+
+
+
+    
+
+
+
   const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+
+  const studioData = {
+    ...formData,
+    imageUrl: validImages[0],
+    images: validImages,
+    hourlyRate: Number(formData.hourlyRate),
+    securityDeposit: Number(formData.securityDeposit),
+    maxCapacity: Number(formData.maxCapacity),
+    amenities: selectedAmenities,
+    ownerEmail: session?.user.email,
+    ownerName: session?.user.name,
+  };
+
 
     const res = await fetch('http://localhost:5000/add-studio',{
       method:"POST",
       headers: {
         "Content-Type":"application/json",
       },
-      body: JSON.stringify(formData)
+      body: JSON.stringify(studioData)
     })
     const data = await res.json()
 
-    console.log(data);
-
-    const studioData = {
-      ...formData,
-      amenities: selectedAmenities,
-      ownerEmail: session?.user.email,
-      ownerName: session?.user.name,
-    };
+    redirect('/my-listing')
     
-
-    console.log(studioData);
   };
 
   const inputClass =

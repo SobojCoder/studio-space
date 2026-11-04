@@ -153,18 +153,22 @@ export function HeroBanner() {
                     </p>
 
                     <div className="mt-8 flex flex-wrap items-center gap-4">
+                      <Link href='/studio-list'>
                       <Button
                         className="h-12! gap-2! rounded-full! bg-lime-400! px-7! text-sm! font-semibold! text-black! hover:bg-lime-300!"
                       >
                         Explore Studios
                         <ArrowRight />
                       </Button>
+                      </Link>
+                      <Link href='/add-studio'>
                       <Button
                         variant="outline"
                         className="h-12! rounded-full! border-white/40! bg-transparent! px-7! text-sm! font-semibold! text-white! hover:bg-white/10!"
                       >
                         Host Your Space
                       </Button>
+                      </Link>
                     </div>
                   </div>
                 </div>

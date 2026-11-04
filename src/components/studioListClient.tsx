@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useEffect, useState } from "react";
@@ -50,8 +49,7 @@ const StudioListClient = ({
       studio.location.toLowerCase().includes(search.toLowerCase());
 
     const categoryMatch =
-      category === "All Categories" ||
-      studio.category === category;
+      category === "All Categories" || studio.category === category;
 
     return searchMatch && categoryMatch;
   });
@@ -59,7 +57,6 @@ const StudioListClient = ({
   return (
     <main className="min-h-screen bg-[#111518] text-white">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-
         {/* Heading */}
         <div className="mb-10">
           <p className="mb-3 text-sm font-semibold uppercase tracking-[4px] text-[#C4F45A]">
@@ -81,7 +78,6 @@ const StudioListClient = ({
 
         {/* Search and Category Filter */}
         <div className="mb-8 flex flex-col gap-4 rounded-2xl border border-white/10 bg-[#181A20] p-4 sm:flex-row">
-
           {/* Search */}
           <div className="relative flex-1">
             <Search
@@ -100,32 +96,29 @@ const StudioListClient = ({
 
           {/* Category Filter */}
           <div className="flex items-center gap-2 rounded-xl border border-white/10 bg-[#111518] px-4">
-            <SlidersHorizontal
-              size={18}
-              className="text-[#C4F45A]"
-            />
+            <SlidersHorizontal size={18} className="text-[#C4F45A]" />
 
             <select
-  value={category}
-  onChange={(e) => {
-    const value = e.target.value;
+              value={category}
+              onChange={(e) => {
+                const value = e.target.value;
 
-    if (value === "All Categories") {
-      router.push("/studio-list");
-    } else {
-      router.push(
-        `/studio-list?category=${encodeURIComponent(value)}`
-      );
-    }
-  }}
-  className="w-full bg-transparent py-3 text-sm text-[#94A3B8] outline-none"
->
-  {categories.map((item) => (
-    <option key={item} value={item}>
-      {item}
-    </option>
-  ))}
-</select>
+                if (value === "All Categories") {
+                  router.push("/studio-list");
+                } else {
+                  router.push(
+                    `/studio-list?category=${encodeURIComponent(value)}`,
+                  );
+                }
+              }}
+              className="w-full bg-transparent py-3 text-sm text-[#94A3B8] outline-none"
+            >
+              {categories.map((item) => (
+                <option key={item} value={item}>
+                  {item}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
 
@@ -143,7 +136,6 @@ const StudioListClient = ({
         {/* Studio Grid */}
         {filteredStudios.length > 0 ? (
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-
             {filteredStudios.map((studio) => (
               <div
                 key={studio._id}
@@ -164,7 +156,7 @@ const StudioListClient = ({
                       No Image Available
                     </div>
                   )}
-
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#171A20] to-transparent" />
                   <span className="absolute left-4 top-4 rounded-full border border-[#C4F45A]/20 bg-[#111518]/80 px-3 py-1.5 text-xs font-medium text-[#C4F45A] backdrop-blur-md">
                     {studio.category}
                   </span>
@@ -209,9 +201,7 @@ const StudioListClient = ({
                   {/* Price and Button */}
                   <div className="flex items-center justify-between gap-2">
                     <div>
-                      <p className="text-xs text-[#94A3B8]">
-                        Starting from
-                      </p>
+                      <p className="text-xs text-[#94A3B8]">Starting from</p>
 
                       <p className="text-xl font-bold text-white">
                         ${studio.hourlyRate}
@@ -222,7 +212,7 @@ const StudioListClient = ({
                     </div>
 
                     <Link
-                      href={`/studio/${studio._id}`}
+                      href={`/studio-list/${studio._id}`}
                       className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#C4F45A] to-[#A8E83E] px-4 py-3 text-sm font-semibold text-[#111518] transition hover:opacity-90"
                     >
                       View Details
@@ -232,14 +222,10 @@ const StudioListClient = ({
                 </div>
               </div>
             ))}
-
           </div>
         ) : (
           <div className="rounded-2xl border border-white/10 bg-[#181A20] py-20 text-center">
-            <Search
-              className="mx-auto mb-4 text-[#94A3B8]"
-              size={40}
-            />
+            <Search className="mx-auto mb-4 text-[#94A3B8]" size={40} />
 
             <h3 className="text-xl font-semibold text-white">
               No Studios Found
