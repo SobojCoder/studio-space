@@ -161,7 +161,7 @@ export function BookingForm({ studio }: BookingFormProps) {
           </h1>
 
           <p className="mt-4 max-w-xl text-sm leading-7 text-[#9299A5]">
-            You're one step away from your next great project.
+            You&apos;re one step away from your next great project.
             Complete your booking details below.
           </p>
         </div>

@@ -1,23 +1,10 @@
 
 import Link from "next/link";
-import Image from "next/image";
 import {
   ArrowRight,
-  Camera,
-  Clapperboard,
-  Mic,
-  Music,
-  Palette,
-  Search,
-  Video,
-  Users,
-  PartyPopper,
-  Drama,
-  Sparkles,
 } from "lucide-react";
 import CategoryCard from "@/components/categoryCard";
 import { IStudio } from "@/Type/studio";
-import Categories from "@/components/categories";
 
 
 

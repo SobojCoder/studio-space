@@ -1,9 +1,9 @@
-import { ArrowRight, Icon } from 'lucide-react';
-import Image from 'next/image';
+import { IStudio } from '@/Type/studio';
+import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
 
-const CategoryCard = ({studio}) => {
+const CategoryCard = ({studio}:{studio: IStudio}) => {
     return (
         <Link
               key={studio.category}

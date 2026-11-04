@@ -1,10 +1,11 @@
 "use client"
+import { IBooking } from '@/Type/booking';
 import { CalendarDays, Clock, Timer, Users, XCircle } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
-const BookingCard = ({booking}) => {
+const BookingCard = ({booking}:{booking: IBooking}) => {
     const handleBookingDelete = async()=>{
         const res = await fetch(
         `http://localhost:5000/my-bookings/${booking.studioId}`,
@@ -39,9 +40,7 @@ const BookingCard = ({booking}) => {
                     <span className="text-xs text-[#C4F45A]">
                       STUDIO BOOKING
                     </span>
-                    <span className="rounded-full bg-yellow-400/10 px-3 py-1 text-xs text-yellow-400">
-                      {booking.status}
-                    </span>
+                    
                   </div>
 
                   <h3 className="mt-2 text-base font-bold text-white">

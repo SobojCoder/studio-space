@@ -3,6 +3,7 @@ import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import BookingCard from "@/components/bookingCard";
 import { Suspense } from "react";
+import { IBooking } from "@/Type/booking";
 
 export default function MyBookingsPage() {
   return (
@@ -38,7 +39,7 @@ async function BookingContent() {
     throw new Error("Failed to fetch bookings");
   }
 
-  const bookings = await res.json();
+  const bookings: IBooking[] = await res.json();
 
   return (
     <main className="min-h-screen bg-[#111518] px-4 py-12 text-white md:px-8">
@@ -72,7 +73,7 @@ async function BookingContent() {
 
         <div className="space-y-6">
           {bookings.length > 0 ? (
-            bookings.map((booking) => (
+            bookings.map((booking: IBooking) => (
               <BookingCard key={booking._id} booking={booking} />
             ))
           ) : (

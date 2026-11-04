@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import Link from "next/link";
 import {
   Camera, Mail, Lock, Eye, EyeOff,
@@ -205,7 +205,7 @@ export default function SignInPage() {
 
           {/* Sign Up */}
           <p className="text-center text-slate-400 text-sm mt-7">
-            Don't have an account?{" "}
+            Don&apos;t have an account?{" "}
             <Link
               href="/sign-up"
               className="text-[#C4F45A] font-semibold hover:underline"
@@ -220,7 +220,7 @@ export default function SignInPage() {
   );
 }
 
-function Feature({ icon, title, description }) {
+function Feature({ icon, title, description }: { icon: ReactNode; title: string; description: string }) {
   return (
     <div className="flex items-center gap-4">
 
