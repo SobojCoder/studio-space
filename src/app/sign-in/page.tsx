@@ -8,11 +8,14 @@ import {
   CalendarDays, Zap, Heart, LogIn
 } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
-import { redirect } from "next/navigation";
+import { redirect, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 
 export default function SignInPage() {
   const [showPassword, setShowPassword] = useState(false);
+  const searchParams = useSearchParams();
+
+const callbackUrl = searchParams.get("callbackUrl") || "/";
 
    const handleSubmited =async(e:React.SubmitEvent<HTMLElement>)=>{
       e.preventDefault()
@@ -20,7 +23,8 @@ export default function SignInPage() {
       const user = Object.fromEntries(formData.entries()) as {email: string, password: string}
   
       const {data, error} = await authClient.signIn.email({
-        ...user
+        ...user,
+        callbackURL: callbackUrl,
       })
   
      if(data){

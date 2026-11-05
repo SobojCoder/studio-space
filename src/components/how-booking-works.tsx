@@ -50,7 +50,7 @@ const guarantees = [
 
 export function HowBookingWorks() {
   return (
-    <section className="w-full bg-black py-16 text-white md:py-20 lg:py-24">
+    <section id="howToWork"  className="w-full scroll-mt-24 bg-black py-16 text-white md:py-20 lg:py-24">
       <div className="mx-auto w-full max-w-7xl px-6 md:px-8">
         <div className="flex items-center gap-4">
           <span aria-hidden className="h-0.5 w-12 bg-lime-400" />

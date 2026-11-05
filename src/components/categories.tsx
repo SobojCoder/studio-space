@@ -47,7 +47,7 @@ const Categories = async() => {
         </p>
 </div>
         <Link
-            href="/studio-list"
+            href="/categories"
             className="inline-flex shrink-0 items-center gap-2 self-start rounded-full border border-white/20 px-6 py-3 text-sm font-semibold text-white transition hover:border-white/40 hover:bg-white/10 md:self-auto"
           >
             View All Categories

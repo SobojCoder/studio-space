@@ -25,6 +25,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import React from "react";
 import { Button } from "./ui/button";
+import toast from "react-hot-toast";
 
 const MyStudioListingCard = ({ studio }: { studio: IListing }) => {
       const handleDelete = async () => {
@@ -36,6 +37,7 @@ const MyStudioListingCard = ({ studio }: { studio: IListing }) => {
         );
     
         const data = await res.json();
+        toast.success("YOUR STUDIO DELETE SUCCESSFULY.")
         redirect('/my-listing')
         console.log(data);
       };

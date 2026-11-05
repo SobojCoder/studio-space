@@ -17,6 +17,8 @@ import {
 } from "@/components/ui/popover";
 import { Separator } from "@base-ui/react";
 import toast from "react-hot-toast";
+import { usePathname } from "next/navigation";
+import { cn } from "cn";
 
 const exploreCategories = [
   "Photography Studio",
@@ -33,19 +35,20 @@ const exploreCategories = [
 
 const navLinks = [
   { label: "Home", href: "/" },
+  { label: "How to Work", href: "/#howToWork" },
   { label: "Add-studio", href: "/add-studio" },
   { label: "List a Studio", href: "/studio-list" },
-  { label: "About-Us", href: "/about" },
+  { label: "About-Us", href: "/about-us" },
   { label: "Contact", href: "/contact" },
 ];
 
 export  function Navbar() {
   const { data: session } = authClient.useSession();
   const user = session?.user;
+  const pathName = usePathname()
 
   const handleSignOut =()=>{
     authClient.signOut()
-
     toast.error('You are sign out!')
   }
   return (
@@ -66,7 +69,11 @@ export  function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className="text-sm text-zinc-300 transition-colors hover:text-white"
+              className={cn(
+  "text-sm text-[#94A3B8] transition-colors hover:text-[#C4F45A]",
+  (pathName === link.href || (link.href === "/#howToWork"  && pathName === "/" && window.location.hash === "#howToWork")) &&
+    "font-semibold text-[#C4F45A] underline underline-offset-8 decoration-[#C4F45A]",
+)}
             >
               {link.label}
             </Link>
