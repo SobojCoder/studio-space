@@ -1,7 +1,7 @@
-import Categories from "@/components/categories"
-import Featured from "@/components/featured"
-import { HeroBanner } from "@/components/hero-banner"
-import { HowBookingWorks } from "@/components/how-booking-works"
+import Categories from "@/components/HomePage/categories"
+import Featured from "@/components/HomePage/featured"
+import { HeroBanner } from "@/components/HomePage/hero-banner"
+import { HowBookingWorks } from "@/components/HomePage/how-booking-works"
 
 export default function Home() {
   return (

@@ -1,5 +1,5 @@
 
-import StudioListClient from "@/components/studioListClient";
+import StudioListClient from "@/components/shared/studioListClient";
 import { IStudio } from "@/Type/studio";
 
 interface PageProps {

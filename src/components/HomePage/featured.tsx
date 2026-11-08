@@ -5,7 +5,7 @@ import { Suspense } from "react";
 import { ArrowRight, MapPin, Star } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { IStudio } from "@/Type/studio";
-import { FavoriteButton } from "@/components/favorite-button";
+import { FavoriteButton } from "@/components/HomePage/favorite-button";
 
 import MarqueeText from "react-marquee-text";
 import "react-marquee-text/dist/styles.css";

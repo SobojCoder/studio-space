@@ -16,7 +16,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import React from "react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { redirect } from "next/navigation";
 import { getTokenFromClient } from "@/lib/getTokenFromClient";
 
@@ -38,19 +38,7 @@ const BookingCard = ({ booking }: { booking: IBooking }) => {
     console.log(data);
   };
 
-  const statusStyles = {
-  Pending:
-    "bg-yellow-100 text-yellow-700 dark:bg-yellow-400/10 dark:text-yellow-400",
-
-  Confirmed:
-    "bg-green-100 text-green-700 dark:bg-green-400/10 dark:text-green-400",
-
-  Completed:
-    "bg-blue-100 text-blue-700 dark:bg-blue-400/10 dark:text-blue-400",
-
-  Cancelled:
-    "bg-red-100 text-red-700 dark:bg-red-400/10 dark:text-red-400",
-};
+  
 
   return (
     <div
@@ -71,18 +59,10 @@ const BookingCard = ({ booking }: { booking: IBooking }) => {
 
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center justify-between gap-2">
-  <span className="text-xs font-medium text-green-700 dark:text-[#C4F45A]">
-    STUDIO BOOKING
-  </span>
-
-  <span
-    className={`rounded-full px-3 py-1 text-xs font-semibold ${
-      statusStyles[booking.status]
-    }`}
-  >
-    {booking.status}
-  </span>
-</div>
+            <span className="text-xs font-medium text-green-700 dark:text-[#C4F45A]">
+              STUDIO BOOKING
+            </span>
+          </div>
 
           <h3 className="mt-2 text-base font-bold text-gray-900 dark:text-white">
             {booking.title}
@@ -135,7 +115,7 @@ const BookingCard = ({ booking }: { booking: IBooking }) => {
           >
             View Details
           </Link>
-{booking.status === "Pending" && (
+
           <AlertDialog>
             <AlertDialogTrigger
               render={
@@ -177,7 +157,6 @@ const BookingCard = ({ booking }: { booking: IBooking }) => {
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
-)}
         </div>
       </div>
     </div>

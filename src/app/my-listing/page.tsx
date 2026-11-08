@@ -1,4 +1,4 @@
-import MyStudioListingCard from "@/components/myStudioListtingCard";
+import MyStudioListingCard from "@/components/studio/myStudioListtingCard";
 import EmptyState from "@/components/shared/EmptySate";
 import { auth } from "@/lib/auth";
 import { getTokenFromServer } from "@/lib/getTokenFromServer";

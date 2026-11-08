@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import CategoryCard from "@/components/categoryCard";
+import CategoryCard from "@/components/HomePage/categoryCard";
 import { IStudio } from "@/Type/studio";
 
 const CategoriesPage = async () => {

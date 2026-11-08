@@ -1,6 +1,6 @@
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
-import BookingCard from "@/components/bookingCard";
+import BookingCard from "@/components/studio/bookingCard";
 import { Suspense } from "react";
 import { IBooking } from "@/Type/booking";
 import { getTokenFromServer } from "@/lib/getTokenFromServer";

@@ -24,7 +24,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import React from "react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import toast from "react-hot-toast";
 import { getTokenFromClient } from "@/lib/getTokenFromClient";
 import EditStudioDialog from "./editStudioDialog";

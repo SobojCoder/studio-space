@@ -16,7 +16,7 @@ import { Pencil } from "lucide-react";
 import { useState, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 
 const EditStudioDialog = ({ studio }: { studio: IListing }) => {
   const [open, setOpen] = useState(false);

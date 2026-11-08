@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
-import { BookingForm } from "@/components/booking-form";
+import { BookingForm } from "@/components/studio/booking-form";
 import type { IStudio } from "@/Type/studio";
 import { getTokenFromServer } from "@/lib/getTokenFromServer";
 
