@@ -71,13 +71,11 @@ export function BookingForm({ studio }: BookingFormProps) {
   ].join("-");
 
   // Submit booking
-  const handleBooking = async (
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
-    e.preventDefault();
-    setStatus("submitting");
+  const handleBooking = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  setStatus("submitting");
   setError("");
-
+ try {
     const bookingData = {
       title: studio.title,
       studioId: studio._id,
@@ -111,32 +109,35 @@ export function BookingForm({ studio }: BookingFormProps) {
         grandTotal: grandTotal,
       },
     }
-    
-    const token = await getTokenFromClient()
+     const token = await getTokenFromClient();
 
-   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/bookings`, {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-    authorization: `Bearer ${token}`
-  },
-  body: JSON.stringify(bookingData),
-});
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/bookings`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(bookingData),
+    });
+
     const data = await res.json();
 
     if (res.status === 409) {
-  toast.error(data.message || "You have already booked this studio!");
-  setStatus("idle");
-  return;
-}
+      toast.error(data.message || "This studio is already booked for that time!");
+      setStatus("idle");
+      return;
+    }
 
-if (!res.ok) {
-  throw new Error(data.message || "Booking failed!");
-}
+    if (!res.ok) {
+      throw new Error(data.message || data.msg || "Booking failed!");
+    }
 
-toast.success("Booking successful!");
-setStatus("success");
-
+    toast.success("Booking successful!");
+    setStatus("success");
+  } catch (error) {
+    toast.error(error instanceof Error ? error.message : "Something went wrong");
+    setStatus("idle");   // এটাই বাটন আনলক করবে
+  }
   };
 
   // Reset form
@@ -228,7 +229,7 @@ setStatus("success");
                   <div className="flex justify-between gap-3 border-t border-black/10 pt-4 dark:border-white/10">
                     <span className="font-semibold">Total Amount</span>
                     <span className="font-bold text-[#4F7A00] dark:text-[#C6F36B]">
-                      ৳{grandTotal.toLocaleString()}
+                      ${grandTotal.toLocaleString()}
                     </span>
                   </div>
 
@@ -288,8 +289,8 @@ setStatus("success");
 
                   </div>
 
-                  <div className="grid gap-4 sm:grid-cols-2 sm:gap-5">
 
+                  <div className="grid gap-4 sm:grid-cols-2 sm:gap-5">
                     <div>
                       <label className="mb-2 block text-sm font-semibold">
                         Booking Date
@@ -621,7 +622,7 @@ setStatus("success");
                     <span className="text-[#5B6472] dark:text-[#9299A5]">
                       Studio Rent ({duration}h)
                     </span>
-                    <span>৳{rentalTotal.toLocaleString()}</span>
+                    <span>${rentalTotal.toLocaleString()}</span>
                   </div>
 
                   <div className="flex justify-between gap-2">
@@ -635,7 +636,7 @@ setStatus("success");
                     <span className="text-[#5B6472] dark:text-[#9299A5]">
                       Security Deposit
                     </span>
-                    <span>৳{securityDeposit.toLocaleString()}</span>
+                    <span>${securityDeposit.toLocaleString()}</span>
                   </div>
 
                   <div className="border-t border-black/10 pt-5 dark:border-white/10">

@@ -119,7 +119,7 @@ const MyStudioListingCard = ({ studio }: { studio: IListing }) => {
         <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-black/10 pt-5 sm:mt-7 dark:border-white/10">
           <div>
             <span className="text-xl font-bold text-[#4F7A00] sm:text-2xl dark:text-[#C6F36B]">
-              ৳{studio.hourlyRate}
+              ${studio.hourlyRate}
             </span>
             <span className="ml-1 text-xs text-[#5B6472] dark:text-[#9299A5]">/ hour</span>
           </div>

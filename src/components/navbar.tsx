@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/popover";
 import { Separator } from "@base-ui/react";
 import toast from "react-hot-toast";
-import { usePathname, useRouter } from "next/navigation";
+import { redirect, usePathname, useRouter } from "next/navigation";
 import { cn } from "cn";
 import ThemeToggle from "./theme-toggle";
 import { Suspense, useEffect, useState } from "react";
@@ -46,15 +46,14 @@ const navLinks = [
 
 
  function NavbarContent() {
-  const { data: session, isPending } = authClient.useSession();
+  const { data: session } = authClient.useSession();
   const user = session?.user;
   const pathName = usePathname()
-  const router = useRouter();
 
   const handleSignOut = () => {
     authClient.signOut()
     toast.error('You are sign out!')
-     router.refresh();
+    redirect('/')
   }
 
   const [hash, setHash] = useState("");

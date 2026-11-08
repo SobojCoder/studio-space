@@ -14,6 +14,7 @@ export interface IBooking {
   personalInfo: PersonalInfo
   notes: string
   pricing: Pricing
+  status: "Pending" | "Confirmed" | "Completed" | "Cancelled";
 }
 
 export interface PersonalInfo {

@@ -162,7 +162,7 @@ const EditStudioDialog = ({ studio }: { studio: IListing }) => {
           {/* Price and Deposit */}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
-              <label className={labelClass}>Hourly Rate (৳)</label>
+              <label className={labelClass}>Hourly Rate ($)</label>
               <input
                 type="number"
                 name="hourlyRate"
@@ -175,7 +175,7 @@ const EditStudioDialog = ({ studio }: { studio: IListing }) => {
             </div>
 
             <div>
-              <label className={labelClass}>Security Deposit (৳)</label>
+              <label className={labelClass}>Security Deposit ($)</label>
               <input
                 type="number"
                 name="securityDeposit"
