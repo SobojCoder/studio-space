@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import { BookingForm } from "@/components/booking-form";
 import type { IStudio } from "@/Type/studio";
+import { getTokenFromServer } from "@/lib/getTokenFromServer";
 
 type BookingProps = {
   params: Promise<{
@@ -11,9 +12,7 @@ type BookingProps = {
 
 async function getStudio(bookingId: string): Promise<IStudio | null> {
   try {
-    const res = await fetch(`http://localhost:5000/studio/${bookingId}`, {
-      cache: "no-store",
-    });
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/studio/${bookingId}`);
 
     if (!res.ok) return null;
 

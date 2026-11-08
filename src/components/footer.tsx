@@ -71,25 +71,25 @@ export function Footer({ year }: { year: number }) {
   }
 
   return (
-    <footer className="w-full border-t border-zinc-800 bg-black text-white">
-      <div className="mx-auto w-full max-w-7xl px-6 py-12 md:px-8">
-        <div className="grid gap-10 lg:grid-cols-[1fr_auto_1fr] lg:items-center lg:gap-8">
-          <div className="flex flex-col gap-3">
+    <footer className="w-full border-t border-zinc-200 bg-[#F5F7F0] text-[#0B0D10] transition-colors dark:border-zinc-800 dark:bg-black dark:text-white">
+      <div className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 sm:py-12 md:px-8">
+        <div className="grid gap-8 sm:gap-10 lg:grid-cols-[1fr_auto_1fr] lg:items-center lg:gap-8">
+          <div className="flex flex-col items-center gap-3 text-center lg:items-start lg:text-left">
             <Link href="/" className="flex items-center gap-2.5">
               <span className="flex size-10 items-center justify-center rounded-full bg-lime-400">
                 <Aperture className="size-6 text-black" strokeWidth={2.5} />
               </span>
-              <span className="text-2xl font-bold tracking-tight">
-                Studio<span className="text-lime-400">Space</span>
+              <span className="text-xl font-bold tracking-tight sm:text-2xl">
+                Studio<span className="text-lime-700 dark:text-lime-400">Space</span>
               </span>
             </Link>
-            <p className="text-sm text-zinc-400">Create. Book. Inspire.</p>
+            <p className="text-sm text-zinc-600 dark:text-zinc-400">Create. Book. Inspire.</p>
           </div>
 
           <div className="flex flex-col items-center gap-5">
             <nav
               aria-label="Footer"
-              className="flex flex-wrap items-center justify-center gap-4"
+              className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2"
             >
               {footerLinks.map((link, index) => (
                 <Fragment key={link.label}>
@@ -97,12 +97,12 @@ export function Footer({ year }: { year: number }) {
                     <Separator
                       orientation="vertical"
                       aria-hidden
-                      className="h-4! w-px! bg-zinc-700!"
+                      className="h-4! w-px! bg-zinc-300! dark:bg-zinc-700!"
                     />
                   )}
                   <Link
                     href={link.href}
-                    className="text-sm text-zinc-300 transition-colors hover:text-white"
+                    className="text-sm text-zinc-600 transition-colors hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-white"
                   >
                     {link.label}
                   </Link>
@@ -110,13 +110,13 @@ export function Footer({ year }: { year: number }) {
               ))}
             </nav>
 
-            <div className="flex items-center gap-5">
+            <div className="flex items-center gap-4 sm:gap-5">
               {socials.map((social) => (
                 <a
                   key={social.label}
                   href={social.href}
                   aria-label={social.label}
-                  className="text-zinc-300 transition-colors hover:text-lime-400"
+                  className="text-zinc-600 transition-colors hover:text-lime-700 dark:text-zinc-300 dark:hover:text-lime-400"
                 >
                   {social.icon}
                 </a>
@@ -124,12 +124,12 @@ export function Footer({ year }: { year: number }) {
             </div>
           </div>
 
-          <div className="w-full max-w-sm lg:justify-self-end">
-            <p className="mb-3 text-sm font-semibold">Stay in the loop</p>
+          <div className="mx-auto w-full max-w-sm lg:mx-0 lg:justify-self-end">
+            <p className="mb-3 text-center text-sm font-semibold sm:text-left">Stay in the loop</p>
             {subscribed ? (
               <p
                 aria-live="polite"
-                className="flex h-12 items-center rounded-lg border border-zinc-700 px-4 text-sm text-zinc-300"
+                className="flex min-h-12 items-center rounded-lg border border-zinc-300 px-4 py-2 text-sm text-zinc-600 dark:border-zinc-700 dark:text-zinc-300"
               >
                 You&apos;re on the list — watch your inbox!
               </p>
@@ -141,12 +141,12 @@ export function Footer({ year }: { year: number }) {
                   name="email"
                   placeholder="Enter your email"
                   aria-label="Email address"
-                  className="h-12! border-zinc-700! pr-16! text-sm! placeholder:text-zinc-500! focus-visible:border-lime-400! focus-visible:ring-lime-400/30!"
+                  className="h-12! border-zinc-300! bg-white! pr-16! text-sm! text-zinc-900! placeholder:text-zinc-400! focus-visible:border-lime-600! focus-visible:ring-lime-500/30! dark:border-zinc-700! dark:bg-transparent! dark:text-white! dark:placeholder:text-zinc-500! dark:focus-visible:border-lime-400! dark:focus-visible:ring-lime-400/30!"
                 />
                 <Button
                   type="submit"
                   aria-label="Subscribe"
-                  className="absolute inset-y-0 right-0 h-full! w-14 rounded-l-none! bg-lime-400! text-black! hover:bg-lime-300! focus-visible:ring-lime-400/40!"
+                  className="absolute inset-y-0 right-0 h-full! w-12 rounded-l-none! bg-lime-400! text-black! hover:bg-lime-300! focus-visible:ring-lime-400/40! sm:w-14"
                 >
                   <Send className="size-5" />
                 </Button>
@@ -155,20 +155,20 @@ export function Footer({ year }: { year: number }) {
           </div>
         </div>
 
-        <Separator className="my-8 h-px! w-full! bg-zinc-800!" />
+        <Separator className="my-6 h-px! w-full! bg-zinc-200! sm:my-8 dark:bg-zinc-800!" />
 
-        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-          <p className="text-sm text-zinc-400">
+        <div className="flex flex-col items-center gap-3 text-center sm:gap-4 md:flex-row md:items-center md:justify-between md:text-left">
+          <p className="text-sm text-zinc-600 dark:text-zinc-400">
             © {year} StudioSpace. All rights reserved.
           </p>
-          <div className="flex items-center gap-3 text-sm text-zinc-400">
-            <Link href="/privacy" className="transition-colors hover:text-white">
+          <div className="flex flex-wrap items-center justify-center gap-3 text-sm text-zinc-600 dark:text-zinc-400">
+            <Link href="/privacy" className="transition-colors hover:text-zinc-900 dark:hover:text-white">
               Privacy Policy
             </Link>
-            <span aria-hidden className="text-zinc-700">
+            <span aria-hidden className="text-zinc-300 dark:text-zinc-700">
               |
             </span>
-            <Link href="/terms" className="transition-colors hover:text-white">
+            <Link href="/terms" className="transition-colors hover:text-zinc-900 dark:hover:text-white">
               Terms of Service
             </Link>
           </div>

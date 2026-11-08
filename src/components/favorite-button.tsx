@@ -19,12 +19,15 @@ export function FavoriteButton({ label }: FavoriteButtonProps) {
         active ? `Remove ${label} from favorites` : `Save ${label} to favorites`
       }
       onClick={() => setActive((value) => !value)}
-      className="absolute right-3 top-3 z-10 rounded-full p-1.5 text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)] transition hover:text-lime-400"
+      className="absolute right-2 top-2 z-10 rounded-full bg-black/30 p-1.5 text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)] backdrop-blur-sm transition hover:bg-black/45 hover:text-lime-400 sm:right-3 sm:top-3 sm:p-2 dark:bg-black/40 dark:hover:bg-black/55"
     >
       <Heart
         aria-hidden
         strokeWidth={2}
-        className={cn("size-5", active && "fill-lime-400 text-lime-400")}
+        className={cn(
+          "size-4 sm:size-5",
+          active && "fill-lime-400 text-lime-400"
+        )}
       />
     </button>
   );

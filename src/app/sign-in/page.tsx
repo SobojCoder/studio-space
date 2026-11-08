@@ -1,63 +1,91 @@
 
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useState, type ReactNode, type FormEvent } from "react";
 import Link from "next/link";
 import {
-  Camera, Mail, Lock, Eye, EyeOff,
-  CalendarDays, Zap, Heart, LogIn
+  Camera,
+  Mail,
+  Lock,
+  Eye,
+  EyeOff,
+  CalendarDays,
+  Zap,
+  Heart,
+  LogIn,
 } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
-import { redirect, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 
 export default function SignInPage() {
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const searchParams = useSearchParams();
+  const router = useRouter();
 
-const callbackUrl = searchParams.get("callbackUrl") || "/";
+  const requestedCallback = searchParams.get("callbackUrl") || "/";
+  const callbackUrl =
+    requestedCallback.startsWith("/") && !requestedCallback.startsWith("//")
+      ? requestedCallback
+      : "/";
 
-   const handleSubmited =async(e:React.SubmitEvent<HTMLElement>)=>{
-      e.preventDefault()
-      const formData = new FormData(e.target);
-      const user = Object.fromEntries(formData.entries()) as {email: string, password: string}
-  
-      const {data, error} = await authClient.signIn.email({
+  const handleSubmited = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+    const user = Object.fromEntries(formData.entries()) as {
+      email: string;
+      password: string;
+    };
+
+    setLoading(true);
+
+    try {
+      const { data, error } = await authClient.signIn.email({
         ...user,
         callbackURL: callbackUrl,
-      })
-  
-     if(data){
-        toast.success("Login successfully")
-        redirect('/')
-        console.log(data);
-    }
-    if(error){
-        toast.error(error.message ?? "Sign in failed")
-        console.log(error);
-    }
-  
-    }
+      });
 
-  
-    const handleSignInGoogle = async()=>{
-      const data = await authClient.signIn.social({
-        provider: "google",
-        callbackURL: "/",
-      })
+      if (error) {
+        toast.error(error.message ?? "Sign in failed");
+        return;
+      }
+
+      if (data) {
+        toast.success("Login successfully");
+        router.replace(callbackUrl);
+      }
+    } catch {
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
     }
+  };
+
+  const handleSignInGoogle = async () => {
+    try {
+      await authClient.signIn.social({
+        provider: "google",
+        callbackURL: callbackUrl,
+      });
+    } catch {
+      toast.error("Google sign in failed. Please try again.");
+    }
+  };
 
   return (
-    <main className="min-h-screen bg-[#111518] text-white flex flex-col lg:flex-row">
+    <main className="flex min-h-screen flex-col bg-[#F5F7F0] text-[#181A20] lg:flex-row dark:bg-[#111518] dark:text-white">
 
       {/* LEFT SECTION */}
-      <section className="relative flex-1 flex flex-col justify-center px-8 md:px-12 lg:px-14 py-12 overflow-hidden">
+      <section className="relative flex flex-1 flex-col justify-center overflow-hidden px-6 py-12 sm:px-10 md:px-12 lg:px-14 lg:py-16">
 
-        <div className="absolute -top-40 -left-40 w-96 h-96 bg-[#C4F45A]/10 blur-[120px] rounded-full" />
+        <div className="absolute -left-40 -top-40 h-96 w-96 rounded-full bg-[#A3E635]/15 blur-[120px] dark:bg-[#C4F45A]/10" />
 
         {/* Badge */}
-        <div className="relative z-10 mb-10">
-          <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-[#C4F45A]/40 bg-[#C4F45A]/10 text-[#C4F45A] text-sm">
+        <div className="relative z-10 mb-8 lg:mb-10">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#72951A]/30 bg-[#A3E635]/15 px-5 py-2 text-sm font-medium text-[#52730D] dark:border-[#C4F45A]/40 dark:bg-[#C4F45A]/10 dark:text-[#C4F45A]">
             <Zap size={17} />
             Join Our Community
           </div>
@@ -65,21 +93,19 @@ const callbackUrl = searchParams.get("callbackUrl") || "/";
 
         {/* Heading */}
         <div className="relative z-10 max-w-xl">
-
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold font-serif leading-tight">
+          <h1 className="font-serif text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
             Welcome Back to{" "}
-            <span className="text-[#C4F45A]">
+            <span className="text-[#72951A] dark:text-[#C4F45A]">
               Studio Space
             </span>
           </h1>
 
-          <p className="text-base md:text-lg text-slate-400 mt-5 leading-relaxed">
+          <p className="mt-5 text-base leading-relaxed text-[#52525B] sm:text-lg dark:text-[#94A3B8]">
             Book, Create, and Share Amazing Spaces with Ease.
           </p>
 
           {/* Features */}
-          <div className="mt-12 space-y-7">
-
+          <div className="mt-10 space-y-6 sm:mt-12 sm:space-y-7">
             <Feature
               icon={<CalendarDays size={25} />}
               title="Easy Booking"
@@ -97,30 +123,29 @@ const callbackUrl = searchParams.get("callbackUrl") || "/";
               title="Trusted by Creators"
               description="A community built for creativity."
             />
-
           </div>
         </div>
       </section>
 
       {/* RIGHT SECTION */}
-      <section className="flex-1 bg-[#181A20] flex items-center justify-center px-6 py-10 md:px-10 lg:px-12">
+      <section className="flex flex-1 items-center justify-center bg-white px-4 py-10 sm:px-8 md:px-10 lg:bg-[#EEF5DF] lg:px-12 dark:bg-[#181A20] dark:lg:bg-[#181A20]">
 
-        <div className="w-full max-w-[520px] border border-white/10 rounded-3xl bg-white/[0.02] p-7 md:p-9">
+        <div className="w-full max-w-[520px] rounded-3xl border border-[#E4E4E7] bg-[#F5F7F0] p-6 shadow-sm sm:p-8 md:p-9 dark:border-white/10 dark:bg-white/[0.02]">
 
           {/* Icon */}
-          <div className="flex justify-center mb-5">
-            <div className="w-16 h-16 bg-[#C4F45A] rounded-2xl flex items-center justify-center">
-              <Camera size={32} className="text-black" />
+          <div className="mb-5 flex justify-center">
+            <div className="flex size-16 items-center justify-center rounded-2xl bg-[#A3E635] dark:bg-[#C4F45A]">
+              <Camera size={32} className="text-[#181A20]" />
             </div>
           </div>
 
           {/* Heading */}
-          <div className="text-center mb-8">
-            <h2 className="text-3xl md:text-4xl font-bold font-serif">
+          <div className="mb-8 text-center">
+            <h2 className="font-serif text-3xl font-bold text-[#181A20] sm:text-4xl dark:text-white">
               Sign In
             </h2>
 
-            <p className="text-slate-400 text-sm md:text-base mt-2">
+            <p className="mt-2 text-sm text-[#52525B] sm:text-base dark:text-[#94A3B8]">
               Continue your journey with Studio Space
             </p>
           </div>
@@ -129,51 +154,60 @@ const callbackUrl = searchParams.get("callbackUrl") || "/";
           <form onSubmit={handleSubmited} className="space-y-5">
 
             {/* Email */}
-            <div className="flex items-center gap-3 border border-white/10 rounded-xl px-5 py-4 focus-within:border-[#C4F45A] transition">
-              <Mail size={22} className="text-[#C4F45A]" />
+            <div className="flex items-center gap-3 rounded-xl border border-[#E4E4E7] bg-white px-4 py-4 transition focus-within:border-[#72951A] sm:px-5 dark:border-white/10 dark:bg-[#111518] dark:focus-within:border-[#C4F45A]">
+              <Mail
+                size={22}
+                className="shrink-0 text-[#72951A] dark:text-[#C4F45A]"
+              />
 
               <input
                 type="email"
                 name="email"
                 placeholder="Email Address"
                 required
-                className="w-full bg-transparent outline-none text-white text-base placeholder:text-slate-400"
+                className="w-full bg-transparent text-base text-[#181A20] outline-none placeholder:text-[#71717A] dark:text-white dark:placeholder:text-[#94A3B8]"
               />
             </div>
 
             {/* Password */}
-            <div className="flex items-center gap-3 border border-white/10 rounded-xl px-5 py-4 focus-within:border-[#C4F45A] transition">
+            <div className="flex items-center gap-3 rounded-xl border border-[#E4E4E7] bg-white px-4 py-4 transition focus-within:border-[#72951A] sm:px-5 dark:border-white/10 dark:bg-[#111518] dark:focus-within:border-[#C4F45A]">
 
-              <Lock size={22} className="text-[#C4F45A]" />
+              <Lock
+                size={22}
+                className="shrink-0 text-[#72951A] dark:text-[#C4F45A]"
+              />
 
               <input
                 type={showPassword ? "text" : "password"}
                 name="password"
                 placeholder="Password"
                 required
-                className="w-full bg-transparent outline-none text-white text-base placeholder:text-slate-400"
+                className="w-full bg-transparent text-base text-[#181A20] outline-none placeholder:text-[#71717A] dark:text-white dark:placeholder:text-[#94A3B8]"
               />
 
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="text-slate-400 hover:text-[#C4F45A]"
+                className="shrink-0 text-[#71717A] transition hover:text-[#72951A] dark:text-[#94A3B8] dark:hover:text-[#C4F45A]"
               >
                 {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
               </button>
             </div>
 
             {/* Remember / Forgot */}
-            <div className="flex justify-between items-center text-sm text-slate-400">
+            <div className="flex flex-wrap items-center justify-between gap-3 text-sm text-[#52525B] dark:text-[#94A3B8]">
 
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" className="accent-[#C4F45A]" />
+              <label className="flex cursor-pointer items-center gap-2">
+                <input
+                  type="checkbox"
+                  className="size-4 accent-[#72951A] dark:accent-[#C4F45A]"
+                />
                 Remember me
               </label>
 
               <Link
                 href="/forgot-password"
-                className="text-[#C4F45A] hover:underline"
+                className="font-medium text-[#52730D] transition hover:underline dark:text-[#C4F45A]"
               >
                 Forgot Password?
               </Link>
@@ -182,66 +216,82 @@ const callbackUrl = searchParams.get("callbackUrl") || "/";
             {/* Sign In */}
             <button
               type="submit"
-              className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-gradient-to-r from-[#C4F45A] to-[#A8E83E] text-black text-base font-semibold hover:shadow-lg hover:shadow-[#C4F45A]/20 hover:scale-[1.01] transition duration-300"
+              disabled={loading}
+              className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#A3E635] to-[#84CC16] py-3.5 text-base font-semibold text-[#181A20] transition duration-300 hover:scale-[1.01] hover:shadow-lg hover:shadow-[#72951A]/20 disabled:cursor-not-allowed disabled:opacity-60 dark:from-[#C4F45A] dark:to-[#A8E83E]"
             >
-              <LogIn size={21} />
-              Sign In
+              {loading ? (
+                <>
+                  <span className="size-5 animate-spin rounded-full border-2 border-[#181A20] border-t-transparent" />
+                  Signing In...
+                </>
+              ) : (
+                <>
+                  <LogIn size={21} />
+                  Sign In
+                </>
+              )}
             </button>
-
           </form>
 
           {/* Divider */}
-          <div className="flex items-center gap-4 my-6">
-            <div className="h-px bg-white/15 flex-1" />
-            <span className="text-slate-500 text-sm">or</span>
-            <div className="h-px bg-white/15 flex-1" />
+          <div className="my-6 flex items-center gap-4">
+            <div className="h-px flex-1 bg-[#E4E4E7] dark:bg-white/15" />
+            <span className="text-sm text-[#71717A] dark:text-[#94A3B8]">
+              or
+            </span>
+            <div className="h-px flex-1 bg-[#E4E4E7] dark:bg-white/15" />
           </div>
 
           {/* Google */}
           <button
-          onClick={handleSignInGoogle}
+            onClick={handleSignInGoogle}
             type="button"
-            className="w-full py-3.5 rounded-xl border border-white/15 flex items-center justify-center gap-3 text-base hover:bg-white/5 transition"
+            className="flex w-full items-center justify-center gap-3 rounded-xl border border-[#D4D4D8] bg-white py-3.5 text-base font-medium text-[#181A20] transition hover:bg-[#F5F7F0] dark:border-white/15 dark:bg-[#111518] dark:text-white dark:hover:bg-white/5"
           >
-            <span className="text-xl font-bold text-blue-400">G</span>
+            <span className="text-xl font-bold text-blue-500">G</span>
             Continue with Google
           </button>
 
           {/* Sign Up */}
-          <p className="text-center text-slate-400 text-sm mt-7">
+          <p className="mt-7 text-center text-sm text-[#52525B] dark:text-[#94A3B8]">
             Don&apos;t have an account?{" "}
             <Link
               href="/sign-up"
-              className="text-[#C4F45A] font-semibold hover:underline"
+              className="font-semibold text-[#52730D] hover:underline dark:text-[#C4F45A]"
             >
               Sign Up
             </Link>
           </p>
-
         </div>
       </section>
     </main>
   );
 }
 
-function Feature({ icon, title, description }: { icon: ReactNode; title: string; description: string }) {
+function Feature({
+  icon,
+  title,
+  description,
+}: {
+  icon: ReactNode;
+  title: string;
+  description: string;
+}) {
   return (
     <div className="flex items-center gap-4">
-
-      <div className="w-14 h-14 shrink-0 rounded-full bg-[#C4F45A] flex items-center justify-center text-black">
+      <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-[#A3E635] text-[#181A20] sm:size-14 dark:bg-[#C4F45A]">
         {icon}
       </div>
 
       <div>
-        <h3 className="text-base md:text-lg font-semibold font-serif">
+        <h3 className="font-serif text-base font-semibold text-[#181A20] sm:text-lg dark:text-white">
           {title}
         </h3>
 
-        <p className="text-sm md:text-base text-slate-400 mt-1">
+        <p className="mt-1 text-sm text-[#52525B] sm:text-base dark:text-[#94A3B8]">
           {description}
         </p>
       </div>
-
     </div>
   );
 }

@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useEffect, useState } from "react"
@@ -104,7 +105,7 @@ export function HeroBanner() {
     <section
       aria-label="Featured spaces"
       className={cn(
-        "relative isolate w-full overflow-hidden bg-black text-white",
+        "relative isolate w-full overflow-hidden bg-white text-zinc-900 transition-colors duration-300 dark:bg-[#111518] dark:text-white",
         SECTION_HEIGHT
       )}
       onMouseEnter={() => setPaused(true)}
@@ -130,44 +131,46 @@ export function HeroBanner() {
                     loading={index === 0 ? "eager" : "lazy"}
                     className="object-cover"
                   />
-                  {/* Readability overlays: horizontal fade on desktop, flat dim on mobile. */}
-                  <div className="absolute inset-0 hidden bg-gradient-to-r from-black via-black/80 to-transparent md:block" />
+
+                  {/* Image overlays */}
+                  <div className="absolute inset-0 hidden bg-gradient-to-r from-black/95 via-black/75 to-black/10 md:block" />
                   <div className="absolute inset-0 bg-black/65 md:hidden" />
 
-                  <div className="relative z-10 mx-auto flex h-full w-full max-w-7xl flex-col justify-center px-6 pb-16 md:px-8 md:pb-0">
-                    <Badge className="mb-5 h-8! gap-2! rounded-full! border-lime-400/30! bg-lime-400/10! px-3.5! text-[11px]! font-semibold! uppercase tracking-[0.18em] text-white! backdrop-blur-sm">
+                  <div className="relative z-10 mx-auto flex h-full w-full max-w-7xl flex-col justify-center px-5 pb-20 sm:px-8 sm:pb-16 md:px-10 md:pb-0 lg:px-12">
+                    <Badge className="mb-5 h-8! w-fit! gap-2! rounded-full! border border-[#C4F45A]/30! bg-[#C4F45A]/10! px-3.5! text-[10px]! font-semibold! uppercase tracking-[0.15em] text-[#C4F45A]! backdrop-blur-sm sm:text-[11px]!">
                       <span
                         aria-hidden
-                        className="size-2 rounded-full bg-lime-400"
+                        className="size-2 rounded-full bg-[#C4F45A]"
                       />
                       {slide.badge}
                     </Badge>
 
-                    <Heading className="max-w-[15ch] text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl lg:leading-[1.05]">
+                    <Heading className="max-w-[15ch] text-3xl leading-tight font-bold tracking-tight text-white sm:text-4xl md:text-5xl lg:text-6xl lg:leading-[1.05]">
                       {slide.title}{" "}
-                      <span className="text-lime-400">{slide.highlight}</span>
+                      <span className="text-[#C4F45A]">
+                        {slide.highlight}
+                      </span>
                     </Heading>
 
-                    <p className="mt-5 max-w-md text-base text-zinc-300 sm:text-lg">
+                    <p className="mt-4 max-w-md text-sm leading-6 text-zinc-200 sm:mt-5 sm:text-base sm:leading-7 lg:text-lg">
                       {slide.description}
                     </p>
 
-                    <div className="mt-8 flex flex-wrap items-center gap-4">
-                      <Link href='/studio-list'>
-                      <Button
-                        className="h-12! gap-2! rounded-full! bg-lime-400! px-7! text-sm! font-semibold! text-black! hover:bg-lime-300!"
-                      >
-                        Explore Studios
-                        <ArrowRight />
-                      </Button>
+                    <div className="mt-7 flex flex-wrap items-center gap-3 sm:mt-8 sm:gap-4">
+                      <Link href="/studio-list">
+                        <Button className="h-11! gap-2! rounded-full! bg-[#C4F45A]! px-6! text-sm! font-semibold! text-[#111518]! transition-all hover:bg-[#A8E83E]! sm:h-12! sm:px-7!">
+                          Explore Studios
+                          <ArrowRight />
+                        </Button>
                       </Link>
-                      <Link href='/add-studio'>
-                      <Button
-                        variant="outline"
-                        className="h-12! rounded-full! border-white/40! bg-transparent! px-7! text-sm! font-semibold! text-white! hover:bg-white/10!"
-                      >
-                        Host Your Space
-                      </Button>
+
+                      <Link href="/add-studio">
+                        <Button
+                          variant="outline"
+                          className="h-11! rounded-full! border-white/40! bg-white/5! px-6! text-sm! font-semibold! text-white! backdrop-blur-sm transition-all hover:border-[#C4F45A]! hover:bg-[#C4F45A]/10! hover:text-[#C4F45A]! sm:h-12! sm:px-7!"
+                        >
+                          Host Your Space
+                        </Button>
                       </Link>
                     </div>
                   </div>
@@ -177,11 +180,12 @@ export function HeroBanner() {
           })}
         </CarouselContent>
 
-        <CarouselPrevious className="left-4! size-11! rounded-full! border-white/20! bg-white/10! text-white! backdrop-blur-md hover:bg-white/20! hover:text-white! [&_svg]:size-5!" />
-        <CarouselNext className="right-4! size-11! rounded-full! border-white/20! bg-white/10! text-white! backdrop-blur-md hover:bg-white/20! hover:text-white! [&_svg]:size-5!" />
+        <CarouselPrevious className="left-2! size-9! rounded-full! border-white/20! bg-black/30! text-white! backdrop-blur-md hover:bg-[#C4F45A]! hover:text-[#111518]! sm:left-4! sm:size-11! [&_svg]:size-4! sm:[&_svg]:size-5!" />
 
-        <div className="absolute bottom-6 left-0 right-0 z-20">
-          <div className="mx-auto flex w-full max-w-7xl items-center gap-2.5 px-6 md:px-8">
+        <CarouselNext className="right-2! size-9! rounded-full! border-white/20! bg-black/30! text-white! backdrop-blur-md hover:bg-[#C4F45A]! hover:text-[#111518]! sm:right-4! sm:size-11! [&_svg]:size-4! sm:[&_svg]:size-5!" />
+
+        <div className="absolute right-0 bottom-6 left-0 z-20">
+          <div className="mx-auto flex w-full max-w-7xl items-center gap-2.5 px-5 sm:px-8 md:px-10 lg:px-12">
             {slides.map((slide, index) => (
               <button
                 key={slide.id}
@@ -190,10 +194,10 @@ export function HeroBanner() {
                 aria-label={`Go to slide ${index + 1}: ${slide.badge}`}
                 aria-current={index === current}
                 className={cn(
-                  "size-2.5 rounded-full transition-colors duration-300",
+                  "size-2.5 rounded-full transition-all duration-300",
                   index === current
-                    ? "bg-lime-400"
-                    : "bg-white/30 hover:bg-white/60"
+                    ? "w-7! bg-[#C4F45A]!"
+                    : "bg-white/40 hover:bg-white/80"
                 )}
               />
             ))}

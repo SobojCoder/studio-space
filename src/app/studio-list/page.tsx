@@ -1,3 +1,4 @@
+
 import StudioListClient from "@/components/studioListClient";
 import { IStudio } from "@/Type/studio";
 
@@ -10,7 +11,7 @@ interface PageProps {
 const StudioListPage = async ({ params }: PageProps) => {
   const { category } = await params;
 
-  const res = await fetch("http://localhost:5000/studio-list", {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/studio-list`, {
     cache: "no-store",
   });
 
