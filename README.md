@@ -42,16 +42,6 @@ Studio owners can also showcase their spaces, manage listings, and handle bookin
 - View personal booking history.
 - Cancel eligible pending bookings.
 
-### Booking Status Tracking
-
-Every booking includes a status to help users track reservation progress.
-
-| Status | Description |
-|---|---|
-| Pending | Awaiting booking approval |
-| Confirmed | Reservation approved |
-| Completed | Booking successfully completed |
-| Cancelled | Reservation cancelled |
 
 ### Modern User Experience
 - Responsive design for mobile, tablet, and desktop.
@@ -74,144 +64,6 @@ Every booking includes a status to help users track reservation progress.
 | Security | JWT, JOSE |
 | Deployment | Vercel, Backend Hosting Provider |
 
----
-
-## Project Structure
-
-```text
-studio-space/
-│
-├── public/
-├── src/
-│   ├── app/
-│   ├── components/
-│   ├── hooks/
-│   ├── lib/
-│   ├── Type/
-│   └── ...
-│
-├── .env.local
-├── package.json
-└── README.md
-```
-
-**Backend Repository**
-
-```text
-studio-space-server/
-│
-├── index.js
-├── .env
-├── package.json
-└── ...
-```
-
----
-
-## Getting Started
-
-Follow these instructions to run StudioSpace locally.
-
-### Prerequisites
-
-Make sure you have the following installed:
-
-- Node.js (LTS recommended)
-- npm
-- MongoDB database
-- Git
-
-### 1. Clone the Frontend Repository
-
-```bash
-git clone YOUR_FRONTEND_REPOSITORY_URL
-cd studio-space
-```
-
-### 2. Install Dependencies
-
-```bash
-npm install
-```
-
-### 3. Configure Environment Variables
-
-Create a `.env.local` file in the frontend root directory.
-
-```env
-NEXT_PUBLIC_API_URL=http://localhost:5000
-
-MONGODB_URL=your_mongodb_connection_string
-
-BETTER_AUTH_URL=http://localhost:3000
-
-BETTER_AUTH_SECRET=your_better_auth_secret
-```
-
-Configure your Google OAuth credentials in your authentication setup if Google login is enabled.
-
-### 4. Start the Frontend
-
-```bash
-npm run dev
-```
-
-Frontend development server:
-
-`http://localhost:3000`
-
-### 5. Clone the Backend Repository
-
-Open another terminal:
-
-```bash
-git clone YOUR_BACKEND_REPOSITORY_URL
-cd studio-space-server
-```
-
-### 6. Install Backend Dependencies
-
-```bash
-npm install
-```
-
-### 7. Configure Backend Environment
-
-Create a `.env` file in the backend root directory.
-
-```env
-PORT=5000
-MONGODB_URL=your_mongodb_connection_string
-```
-
-Add any additional environment variables required by your authentication implementation.
-
-### 8. Start the Backend Server
-
-```bash
-npm run dev
-```
-
-Backend development server:
-
-`http://localhost:5000`
-
----
-
-## API Overview
-
-The backend provides REST API endpoints for managing studios and reservations.
-
-| Method | Endpoint | Description |
-|---|---|---|
-| GET | `/studios` | Retrieve studios |
-| GET | `/studio/:studioId` | Retrieve studio details |
-| POST | `/add-studio` | Create a studio listing |
-| GET | `/my-bookings/:email` | Retrieve user bookings |
-| POST | `/bookings` | Create a booking |
-| DELETE | `/my-bookings/:studioId` | Cancel a booking |
-
-*Note: Adjust endpoint names to match your final backend implementation.*
 
 ---
 
@@ -274,8 +126,8 @@ Before deployment:
 
 **Soboj Paul**
 
-- GitHub: [GitHub Profile](YOUR_GITHUB_PROFILE_URL)
-- LinkedIn: [LinkedIn Profile](YOUR_LINKEDIN_PROFILE_URL)
+- GitHub: [GitHub Profile](https://github.com/SobojCoder)
+- LinkedIn: [LinkedIn Profile](https://www.linkedin.com/in/soboj-paul/)
 
 ---
 
